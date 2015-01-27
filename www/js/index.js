@@ -4,6 +4,7 @@ var lc;
 var pgr = false;
 var path = '';
 
+//var capture = navigator.device.capture;
 
 window.addEventListener('load', function () {
     document.addEventListener("deviceReady", deviceReady, false);
@@ -35,6 +36,7 @@ var captureSuccess = function(mediaFiles) {
 
 // capture callback
 var captureAllSuccess = function(mediaFiles) {
+    alert('mediaFiles: ' + mediaFiles.length);
     var i, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
@@ -54,15 +56,6 @@ var captureError = function(error) {
 };
 
 function captureAudio() {
-    // Launch device audio recording application,
-    // allowing user to capture up to 2 audio clips
-    //document.getElementById('audioPlay').hidden= true;
-    //document.getElementById('audioSave').hidden= true;
-    //document.getElementById('audio_position').hidden= true;
-    //document.getElementById('audioCapture').hidden= false;
-
-    //navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2});
-    alert('captureAudio');
     navigator.device.capture.captureAudio(captureAllSuccess, captureError, {limit: 2});
 }
 
