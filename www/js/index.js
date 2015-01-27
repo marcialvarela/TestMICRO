@@ -36,7 +36,7 @@ var captureSuccess = function(mediaFiles) {
 
 // capture callback
 var captureAllSuccess = function(mediaFiles) {
-    alert('captureAllSuccess');
+    alert('Entra en captureAllSuccess');
     alert('mediaFiles: ' + mediaFiles.length);
     var i, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
@@ -48,7 +48,7 @@ var captureAllSuccess = function(mediaFiles) {
 
 // capture error callback
 var captureError = function(error) {
-    alert('captureError');
+    alert('Entra en captureError');
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 
     //document.getElementById('audioPlay').hidden= false;
@@ -58,6 +58,7 @@ var captureError = function(error) {
 };
 
 function captureAudio() {
+    alert('Entra en captureAudio');
     navigator.device.capture.captureAudio(captureAllSuccess, captureError, {limit: 2});
 }
 
