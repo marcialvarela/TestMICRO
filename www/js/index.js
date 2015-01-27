@@ -40,6 +40,7 @@ var captureAllSuccess = function(mediaFiles) {
         path = mediaFiles[i].fullPath;
         // do something interesting with the file
     }
+    alert(path);
 };
 
 // capture error callback
@@ -61,6 +62,7 @@ function captureAudio() {
     //document.getElementById('audioCapture').hidden= false;
 
     //navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2});
+    alert('captureAudio');
     navigator.device.capture.captureAudio(captureAllSuccess, captureError, {limit: 2});
 }
 
@@ -89,6 +91,7 @@ function onErrorPlay(error) {
 
 function playAudio() {
 
+    alert('Entra en playAudio');
     if (path.length >0)
     {
         // Create Media object from src
@@ -149,6 +152,7 @@ function uploadFile(mediaFile) {
 
 function saveAudio() {
 
+    alert('Entra en saveAudio');
     if (path.length >0)
     {
         //document.getElementById('audioPlay').hidden= true;
@@ -165,6 +169,7 @@ function saveAudio() {
 
 function loadAudio() {
 
+    alert('Entra en loadAudio');
     if (path.length >0)
     {
         //document.getElementById('audioPlay').hidden= true;
@@ -181,6 +186,7 @@ function loadAudio() {
 
 function clearLocalStorage() {
 
+    alert('Entra en clearLocalStorage');
     if (path.length >0)
     {
         localStorage.clear();
