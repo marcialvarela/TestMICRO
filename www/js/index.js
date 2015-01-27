@@ -36,6 +36,7 @@ var captureSuccess = function(mediaFiles) {
 
 // capture callback
 var captureAllSuccess = function(mediaFiles) {
+    alert('captureAllSuccess');
     alert('mediaFiles: ' + mediaFiles.length);
     var i, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
@@ -47,6 +48,7 @@ var captureAllSuccess = function(mediaFiles) {
 
 // capture error callback
 var captureError = function(error) {
+    alert('captureError');
     navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
 
     //document.getElementById('audioPlay').hidden= false;
