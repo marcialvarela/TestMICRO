@@ -50,6 +50,10 @@
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
 
+    <feature name="Capture">
+        <param name="android-package" value="org.apache.cordova.mediacapture.Capture" />
+    </feature>
+
     <!--BlackBerry 10 platform-->
     <!--<feature name="Media" value="Media" />-->
 
