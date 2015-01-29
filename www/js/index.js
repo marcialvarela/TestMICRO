@@ -156,8 +156,7 @@ function recordAudio() {
             meFile.stopRecord();
             alert('End record');
             alert(meFile);
-            alert(meFile.duration);
-
+            meFile.play();
         }
     }, 1000);
 
