@@ -69,7 +69,8 @@ function stopAudio() {
 
 // Play audio
 //
-function playAudio(url) {
+function playAudio() {
+    alert('entra playAudio');
     // Play the audio file at url
     var my_media = new Media(mediaRec,
         // success callback
@@ -85,10 +86,23 @@ function playAudio(url) {
     // Play audio
     my_media.play();
 
-    // Pause after 10 seconds
-    setTimeout(function() {
-        my_media.stop();
-    }, 10000);
+    // Stop recording after 10 sec
+    var playTime = 0;
+    var playInterval = setInterval(function() {
+        playTime = playTime + 1;
+        setAudioPlayPosition(playTime + " sec");
+        if (playTime >= 10) {
+            clearInterval(playInterval);
+            my_media.stop();
+        }
+    }, 1000);
+
+
+    //// Pause after 10 seconds
+    //setTimeout(function() {
+    //    my_media.stop();
+    //}, 10000);
+    alert('sale playAudio');
 }
 
 /*************************** PLAY AUDIO - END ***************************/
@@ -102,7 +116,6 @@ function recordAudio() {
 
     // Record audio
     mediaRec.startRecord();
-    alert('startRecord');
 
     // Stop recording after 10 sec
     var recTime = 0;
@@ -112,7 +125,6 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             mediaRec.stopRecord();
-            alert('stopRecord');
         }
     }, 1000);
     alert('sale recordAudio');
@@ -142,6 +154,10 @@ function onError(error) {
 //
 function setAudioPosition(position) {
     document.getElementById('audio_positionRecord').innerHTML = position;
+}
+
+function setAudioPlayPosition(position) {
+    document.getElementById('audio_positionPlay').innerHTML = position;
 }
 
 /*************************** RECORD AUDIO - END ***************************/

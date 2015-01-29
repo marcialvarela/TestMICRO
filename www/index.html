@@ -37,12 +37,6 @@
             <p id="media">Recording audio...</p>
             <p id="audio_positionRecord"></p>
             <br/>
-            <br/>
-            <br/>
-            <!--<input type="button" value="Refresh Location" onclick="getAudio();">-->
-            <button id="audioCapture" value="audioCapture" onclick="captureAudio();" style="height: 60px; width: 200px; font-size: 40px">Capture</button>
-            <br/>
-            <button id="audioStop" value="audioStop" onclick="stopAudio();" style="height: 60px; width: 200px; font-size: 40px">Stop</button>
             <button id="audioPlay" value="audioPlay" onclick="playAudio();" style="height: 60px; width: 200px; font-size: 40px" >Play</button>
             <p id="audio_positionPlay"></p>
             <br/>
@@ -51,11 +45,20 @@
             <br/>
             <br/>
             <br/>
-            <button id="audioSave"  value="audioSave" onclick="saveAudio();" style="height: 60px; width: 200px; font-size: 40px">Save</button>
+            <button id="audioCapture" value="audioCapture" onclick="captureAudio();" style="height: 60px; width: 200px; font-size: 40px" visible="false">Capture</button>
             <br/>
-            <button id="audioLoad"  value="audioLoad" onclick="loadAudio();" style="height: 60px; width: 200px; font-size: 40px">Load</button>
+            <button id="audioStop" value="audioStop" onclick="stopAudio();" style="height: 60px; width: 200px; font-size: 40px" visible="false">Stop</button>
             <br/>
-            <button id="audioClear"  value="audioClear" onclick="clearLocalStorage();" style="height: 60px; width: 200px; font-size: 40px">Clear Storage</button>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <button id="audioSave"  value="audioSave" onclick="saveAudio();" style="height: 60px; width: 200px; font-size: 40px" visible="false">Save</button>
+            <br/>
+            <button id="audioLoad"  value="audioLoad" onclick="loadAudio();" style="height: 60px; width: 200px; font-size: 40px" visible="false">Load</button>
+            <br/>
+            <button id="audioClear"  value="audioClear" onclick="clearLocalStorage();" style="height: 60px; width: 200px; font-size: 40px" visible="false">Clear Storage</button>
             <br/>
             <br/>
             <br/>
