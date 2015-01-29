@@ -88,42 +88,33 @@ function captureAudio() {
 }
 
 function captureAudio2() {
+    alert('Entra en captureAudio2');
+    var options = { limit: 2, duration: 10 };
+    navigator.device.capture.captureAudio(captureSuccess2, captureError, {limit: 1, duration: 10});
+    alert('Sale de captureAudio2');
+}
 
-    alert('Entra en captureAudio2()');
-    navigator.device.capture.captureAudio(function(mediaFiles){
-
-        alert('Pasa por 1');
-        // mediaFiles will be an array of MediaFile objects
-
-        var options = new FileUploadOptions();
-        alert('Pasa por 2');
-        var ft = new FileTransfer();
-        alert('Pasa por 3');
-        var fileURI = mediaFiles[0].fullPath;
-        alert('Pasa por 4');
-
-
-        options.params = _.extend({}, {id: 5});
-        options.fileKey = "file";
-        options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-        options.headers = {Connection: "close"};
-
-        alert('Pasa por 5');
-        alert(options.fileName);
-        
-        // upload the file to the server
-/*        ft.upload(fileURI, encodeURI("http://www.setfive.com/upload.php"), function(resp){
-            var data = JSON.parse(resp.response);
-            alert( data.successMsg );
-        }, function(error){
-            alert("Sorry! Something went wrong. Please try again.");
-        }, options);
-*/
-
-    }, {limit: 1, duration: 10});
+var captureSuccess2  = function(mediaFiles) {
+    alert('Entra en captureSuccess2');
     // mediaFiles will be an array of MediaFile objects
 
-}
+    var options = new FileUploadOptions();
+    alert('Pasa por 2');
+    var ft = new FileTransfer();
+    alert('Pasa por 3');
+    var fileURI = mediaFiles[0].fullPath;
+    alert('Pasa por 4');
+
+
+    options.params = _.extend({}, {id: 5});
+    options.fileKey = "file";
+    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+    options.headers = {Connection: "close"};
+
+    alert('Pasa por 5');
+    alert(options.fileName);
+};
+
 /*************************** CAPTURE AUDIO - END ***************************/
 
 
