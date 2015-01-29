@@ -70,9 +70,10 @@ var mediaTimer = null;
 
 // Play audio
 //
-function playAudio() {
+function playAudio(src) {
     // Create Media object from src
-    var src = meFile;
+    //var src = meFile;
+    alert('Entra en Play Audio');
     my_media = new Media(src, onSuccess('Play'), onError);
 
     // Play audio
@@ -101,14 +102,20 @@ function playAudio() {
 /*************************** PLAY AUDIO - END ***************************/
 
 
+
+
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
-    alert('entra recordAudio');
+
     var src = "myrecording_001.amr";
     meFile = new Media(src, onSuccess('Record'), onError);
 
+    alert(meFile);
+
     // Record audio
     meFile.startRecord();
+
+    alert(meFile.length);
 
     // Stop recording after 10 sec
     var recTime = 0;
@@ -118,13 +125,13 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             meFile.stopRecord();
+            alert(meFile.length);
+            alert('End record');
+
+            playAudio(meFile);
         }
     }, 1000);
 
-    if (recTime >= 10) {
-        alert(meFile.length);
-        alert('sale recordAudio');
-    }
 }
 /*************************** RECORD AUDIO - END ***************************/
 
@@ -171,7 +178,7 @@ function stopAudio() {
 //
 function onSuccess(action) {
     //console.log("recordAudio():Audio Success");
-    alert(action + ' :Audio Success');
+    console.log(action + " :Audio Success");
 }
 
 // onError Callback
@@ -199,3 +206,9 @@ function setAudioPlayPosition(position) {
 /*************************** LABEL AUDIO - END ***************************/
 
 
+
+/*************************** EXIT APP - INI ***************************/
+function exitApp() {
+    navigator.app.exitApp();
+}
+/*************************** EXIT APP - END ***************************/
