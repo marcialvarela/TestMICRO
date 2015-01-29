@@ -33,24 +33,27 @@
         <div class="app">
             <h1>Capture & Play Audio - PhoneGap platform</h1>
             <br/>
-            <br/>
-            <br/>
-            <br/>
-            <!--<input type="button" value="Refresh Location" onclick="getAudio();">-->
-            <button id="audioCapture" value="audioCapture" onclick="captureAudio();" style="height: 60px; width: 200px; font-size: 40px">Capture Audio</button>
-            <button id="audioStop" value="audioStop" onclick="stopAudio();" style="height: 60px; width: 200px; font-size: 40px">Capture Audio</button>
-            <br/>
-            <button id="audioPlay" value="audioPlay" onclick="playAudio();" style="height: 60px; width: 200px; font-size: 40px" >Play Audio</button>
+            <button id="audioRecord" value="audioRecord" onclick="recordAudio();" style="height: 60px; width: 200px; font-size: 40px">Record</button>
+            <p id="media">Recording audio...</p>
             <p id="audio_position"></p>
             <br/>
             <br/>
             <br/>
+            <!--<input type="button" value="Refresh Location" onclick="getAudio();">-->
+            <button id="audioCapture" value="audioCapture" onclick="captureAudio();" style="height: 60px; width: 200px; font-size: 40px">Capture</button>
+            <br/>
+            <button id="audioStop" value="audioStop" onclick="stopAudio();" style="height: 60px; width: 200px; font-size: 40px">Stop</button>
+            <button id="audioPlay" value="audioPlay" onclick="playAudio();" style="height: 60px; width: 200px; font-size: 40px" >Play</button>
+            <p id="audio_positionPlay"></p>
             <br/>
             <br/>
             <br/>
-            <button id="audioSave"  value="audioSave" onclick="saveAudio();" style="height: 60px; width: 200px; font-size: 40px">Save Audio</button>
             <br/>
-            <button id="audioLoad"  value="audioLoad" onclick="loadAudio();" style="height: 60px; width: 200px; font-size: 40px">Load Audio</button>
+            <br/>
+            <br/>
+            <button id="audioSave"  value="audioSave" onclick="saveAudio();" style="height: 60px; width: 200px; font-size: 40px">Save</button>
+            <br/>
+            <button id="audioLoad"  value="audioLoad" onclick="loadAudio();" style="height: 60px; width: 200px; font-size: 40px">Load</button>
             <br/>
             <button id="audioClear"  value="audioClear" onclick="clearLocalStorage();" style="height: 60px; width: 200px; font-size: 40px">Clear Storage</button>
             <br/>
