@@ -87,13 +87,6 @@ function captureAudio() {
     alert('Sale de captureAudio');
 }
 
-function captureAudio2() {
-    alert('Entra en captureAudio2');
-    var options = { limit: 1, duration: 6 };
-    capture.captureAudio(captureSuccess2, captureError, options);
-    alert('Sale de captureAudio2');
-}
-
 var captureSuccess2  = function(mediaFiles) {
     alert('Entra en captureSuccess2');
     // mediaFiles will be an array of MediaFile objects
@@ -114,6 +107,13 @@ var captureSuccess2  = function(mediaFiles) {
     alert('Pasa por 5');
     alert(options.fileName);
 };
+function captureAudio2() {
+    alert('Entra en captureAudio2');
+    capture.captureAudio(captureSuccess2, captureError, { limit: 1, duration: 6 });
+    alert('Sale de captureAudio2');
+}
+
+
 
 /*************************** CAPTURE AUDIO - END ***************************/
 
