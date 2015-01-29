@@ -140,10 +140,11 @@ function playAudio(src) {
 
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
+    alert('Entra en recordAudio');
 
     meFile = new Media("myfile001.wav", onSuccess('Record'), onError);
     // Record audio
-    alert(mefile.pathname);
+    alert(meFile.pathname);
     meFile.startRecord();
     // Stop recording after 10 sec
     var recTime = 0;
