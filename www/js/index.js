@@ -145,7 +145,7 @@ function playAudio(src) {
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
 
-    meFile = new Media("myfilerecord.wav", onSuccess('Record'), onError);
+    meFile = new Media("/Recording/myfilerecord_001.ogg", onSuccess('Record'), onError);
     // Record audio
     meFile.startRecord();
     // Stop recording after 10 sec
