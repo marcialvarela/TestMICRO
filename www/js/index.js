@@ -110,7 +110,8 @@ function playAudio(src) {
     // Create Media object from src
     //var src = meFile;
     alert('Entra en Play Audio');
-    src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
+    alert(src);
+    //src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
     my_media = new Media(src, onSuccess('Play'), onError);
 
     // Play audio
