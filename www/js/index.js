@@ -4,7 +4,7 @@ var lc;
 var pgr = false;
 var path = '';
 
-//var capture = navigator.device.capture;
+var capture = navigator.device.capture;
 
 window.addEventListener('load', function () {
     document.addEventListener("deviceReady", onDeviceReady, false);
@@ -90,7 +90,7 @@ function captureAudio() {
 function captureAudio2() {
     alert('Entra en captureAudio2');
     var options = { limit: 1, duration: 6 };
-    navigator.device.capture.captureAudio(captureSuccess2, captureError, options);
+    capture.captureAudio(captureSuccess2, captureError, options);
     alert('Sale de captureAudio2');
 }
 
