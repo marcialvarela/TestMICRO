@@ -10,7 +10,7 @@ window.addEventListener('load', function () {
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
 
-function deviceReady() {
+function onDeviceReady() {
     try {
         //Get a handle we'll use to adjust the accelerometer
         //content
@@ -18,11 +18,47 @@ function deviceReady() {
         //Set the variable that lets other parts of the program
         //know that PhoneGap is initialized
         pgr = true;
+
+        // window.requestFileSystem is recognized, so far so good.
+        window.requestFileSystem(1, 0, function(fileSystem){
+            alert('success');
+        }, function(e){
+            // 'e' is an object, {code: 'Class not found'}
+            alert('Error accessing local file system');
+        });
     }
     catch (ex) {
         alert("deviceReady error: "+ex.message);
     }
 }
+
+var requestFileSystem = function(type, size, successCallback, errorCallback) {
+    argscheck.checkArgs('nnFF', 'requestFileSystem', arguments);
+    var fail = function(code) {
+        errorCallback && errorCallback(new FileError(code));
+    };
+
+    if (type < 0) {
+        fail(FileError.SYNTAX_ERR);
+    } else {
+        // if successful, return a FileSystem object
+        var success = function(file_system) {
+            if (file_system) {
+                if (successCallback) {
+                    // grab the name and root from the file system object
+                    var result = new FileSystem(file_system.name, file_system.root);
+                    successCallback(result);
+                }
+            }
+            else {
+                // no FileSystem object returned
+                fail(FileError.NOT_FOUND_ERR);
+            }
+        };
+        // The error happens in exec()
+        exec(success, fail, "File", "requestFileSystem", [type, size]);
+    }
+};
 
 /*************************** CAPTURE AUDIO - INI ***************************/
 // capture callback
@@ -74,6 +110,7 @@ function playAudio(src) {
     // Create Media object from src
     //var src = meFile;
     alert('Entra en Play Audio');
+    src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
     my_media = new Media(src, onSuccess('Play'), onError);
 
     // Play audio
@@ -107,16 +144,9 @@ function playAudio(src) {
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
 
-    var src = "myrecording_001.amr";
-    meFile = new Media(src, onSuccess('Record'), onError);
-
-    alert(meFile);
-
+    meFile = new Media("myfilerecord.wav", onSuccess('Record'), onError);
     // Record audio
     meFile.startRecord();
-
-    alert(meFile.length);
-
     // Stop recording after 10 sec
     var recTime = 0;
     var recInterval = setInterval(function() {
@@ -125,9 +155,7 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             meFile.stopRecord();
-            alert(meFile.length);
             alert('End record');
-
             playAudio(meFile);
         }
     }, 1000);
