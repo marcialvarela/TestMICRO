@@ -19,12 +19,13 @@
     specific language governing permissions and limitations
     under the License.
 -->
+
+<!--
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Capture & Play Audio - PhoneGap platform</title>
@@ -56,4 +57,62 @@
         <script type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript" charset="utf-8" src="json2.js"></script>
     </body>
+</html>
+-->
+
+<html>
+<head>
+    <title>Capture Audio</title>
+
+    <script type="text/javascript" charset="utf-8" src="phonegap-1.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="json2.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        // Called when capture operation is finished
+        //
+        function captureSuccess(mediaFiles) {
+            var i, len;
+            for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+                uploadFile(mediaFiles[i]);
+            }
+        }
+
+        // Called if something bad happens.
+        //
+        function captureError(error) {
+            var msg = 'An error occurred during capture: ' + error.code;
+            navigator.notification.alert(msg, null, 'Uh oh!');
+        }
+
+        // A button will call this function
+        //
+        function captureAudio() {
+            // Launch device audio recording application,
+            // allowing user to capture up to 2 audio clips
+            navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2, duration: 10});
+        }
+
+        // Upload files to server
+        function uploadFile(mediaFile) {
+            var ft = new FileTransfer(),
+                    path = mediaFile.fullPath,
+                    name = mediaFile.name;
+
+            ft.upload(path,
+                    "http://my.domain.com/upload.php",
+                    function(result) {
+                        console.log('Upload success: ' + result.responseCode);
+                        console.log(result.bytesSent + ' bytes sent');
+                    },
+                    function(error) {
+                        console.log('Error uploading file ' + path + ': ' + error.code);
+                    },
+                    { fileName: name });
+        }
+
+    </script>
+</head>
+<body>
+<button onclick="captureAudio();" style="font-size: 40px;">Capture Audio</button> <br>
+</body>
 </html>
