@@ -3,7 +3,6 @@ var lc;
 //PhoneGap Ready variable
 var pgr = false;
 var path = '';
-var mediaRec = null;
 
 //var capture = navigator.device.capture;
 
@@ -55,56 +54,49 @@ function captureAudio() {
     //navigator.device.capture.captureAudio(captureAllSuccess, captureError, {limit: 2});
     navigator.device.capture.captureAudio(captureAllSuccess, captureError, options);
 }
-
-function stopAudio() {
-    alert('Entra en stopAudio');
-
-}
 /*************************** CAPTURE AUDIO - END ***************************/
 
 
 
 
 /*************************** PLAY AUDIO - INI ***************************/
+// Audio player
+//
+var my_media = null;
+var mediaTimer = null;
+var mediaRec = null;
+
 
 // Play audio
 //
 function playAudio() {
-    alert('entra playAudio');
-    // Play the audio file at url
-    var my_media = new Media(mediaRec,
-        // success callback
-        function() {
-            console.log("playAudio():Audio Success");
-        },
-        // error callback
-        function(err) {
-            console.log("playAudio():Audio Error: "+err);
-        }
-    );
+    // Create Media object from src
+    var src = "http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
+    my_media = new Media(src, onSuccess('Play'), onError);
 
     // Play audio
     my_media.play();
 
-    // Stop recording after 10 sec
-    var playTime = 0;
-    var playInterval = setInterval(function() {
-        playTime = playTime + 1;
-        setAudioPlayPosition(playTime + " sec");
-        if (playTime >= 10) {
-            clearInterval(playInterval);
-            my_media.stop();
-        }
-    }, 1000);
-
-
-    //// Pause after 10 seconds
-    //setTimeout(function() {
-    //    my_media.stop();
-    //}, 10000);
-    alert('sale playAudio');
+    // Update my_media position every second
+    if (mediaTimer == null) {
+        mediaTimer = setInterval(function() {
+            // get my_media position
+            my_media.getCurrentPosition(
+                // success callback
+                function(position) {
+                    if (position > -1) {
+                        setAudioPlayPosition((position) + " sec");
+                    }
+                },
+                // error callback
+                function(e) {
+                    console.log("Error getting pos=" + e);
+                    setAudioPosition("Error: " + e);
+                }
+            );
+        }, 1000);
+    }
 }
-
 /*************************** PLAY AUDIO - END ***************************/
 
 
@@ -112,7 +104,7 @@ function playAudio() {
 function recordAudio() {
     alert('entra recordAudio');
     var src = "myrecording_001.amr";
-    mediaRec = new Media(src, onSuccess, onError);
+    mediaRec = new Media(src, onSuccess('Record'), onError);
 
     // Record audio
     mediaRec.startRecord();
@@ -127,8 +119,15 @@ function recordAudio() {
             mediaRec.stopRecord();
         }
     }, 1000);
-    alert('sale recordAudio');
+
+    if (recTime >= 10) {
+        alert(mediaRec.length);
+        alert('sale recordAudio');
+    }
 }
+/*************************** RECORD AUDIO - END ***************************/
+
+
 // device APIs are available
 //
 function onDeviceReady() {
@@ -137,19 +136,56 @@ function onDeviceReady() {
     //alert('sale onDeviceReady');
 }
 
+
+
+
+/*************************** PAUSE AUDIO - INI ***************************/
+// Pause audio
+//
+function pauseAudio() {
+    if (my_media) {
+        my_media.pause();
+    }
+}
+/*************************** PAUSE AUDIO - END ***************************/
+
+
+
+/*************************** STOP AUDIO - INI ***************************/
+// Stop audio
+//
+function stopAudio() {
+    if (my_media) {
+        my_media.stop();
+    }
+    clearInterval(mediaTimer);
+    mediaTimer = null;
+}
+/*************************** STOP AUDIO - END ***************************/
+
+
+
+/*************************** LABEL SUCCESS/ERROR - INI ***************************/
 // onSuccess Callback
 //
-function onSuccess() {
-    console.log("recordAudio():Audio Success");
+function onSuccess(action) {
+    //console.log("recordAudio():Audio Success");
+    alert(action + ' :Audio Success');
 }
 
 // onError Callback
 //
 function onError(error) {
     alert('code: '    + error.code    + '\n' +
-    'message: ' + error.message + '\n');
+          'message: ' + error.message + '\n');
 }
+/*************************** LABEL SUCCESS/ERROR - END ***************************/
 
+
+
+
+
+/*************************** LABEL AUDIO - INI ***************************/
 // Set audio position
 //
 function setAudioPosition(position) {
@@ -159,5 +195,6 @@ function setAudioPosition(position) {
 function setAudioPlayPosition(position) {
     document.getElementById('audio_positionPlay').innerHTML = position;
 }
+/*************************** LABEL AUDIO - END ***************************/
 
-/*************************** RECORD AUDIO - END ***************************/
+
