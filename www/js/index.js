@@ -157,7 +157,8 @@ function recordAudio() {
             clearInterval(recInterval);
             meFile.stopRecord();
             alert('End record');
-            playAudio(meFile);
+            meFile.play();
+            //playAudio(meFile);
         }
     }, 1000);
 
