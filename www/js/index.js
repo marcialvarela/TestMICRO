@@ -145,7 +145,7 @@ function playAudio(src) {
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
 
-    meFile = new Media("/Recording/myfilerecord_001.ogg", onSuccess('Record'), onError);
+    meFile = new Media("myfile001.wav", onSuccess('Record'), onError);
     // Record audio
     meFile.startRecord();
     // Stop recording after 10 sec
@@ -157,8 +157,29 @@ function recordAudio() {
             clearInterval(recInterval);
             meFile.stopRecord();
             alert('End record');
+            alert(meFile);
             meFile.play();
+            alert('Después del Play');
             //playAudio(meFile);
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // get my_media position
+                    meFile.getCurrentPosition(
+                        // success callback
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPlayPosition((position) + " sec");
+                            }
+                        },
+                        // error callback
+                        function(e) {
+                            console.log("Error getting pos=" + e);
+                            setAudioPosition("Error: " + e);
+                        }
+                    );
+                }, 1000);
+            }
+
         }
     }, 1000);
 
