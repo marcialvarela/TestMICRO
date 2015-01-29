@@ -61,6 +61,8 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
 };
 
 /*************************** CAPTURE AUDIO - INI ***************************/
+// The global capture object
+var capture = navigator.device.capture;
 // capture callback
 var captureSuccess = function(mediaFiles) {
     path = mediaFiles[0].fullPath;
@@ -69,10 +71,10 @@ var captureSuccess = function(mediaFiles) {
 // capture callback
 var captureAllSuccess = function(mediaFiles) {
     alert('Entra en captureAllSuccess');
-    alert('mediaFiles: ' + mediaFiles.length);
     var i, len;
     for (i = 0, len = mediaFiles.length; i < len; i += 1) {
         path = mediaFiles[i].fullPath;
+        alert(path);
         // do something interesting with the file
     }
     alert(path);
@@ -158,6 +160,7 @@ function recordAudio() {
             meFile.stopRecord();
             alert('End record');
             alert(meFile);
+
             meFile.play();
             alert('Después del Play');
             //playAudio(meFile);
