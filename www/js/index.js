@@ -3,6 +3,7 @@ var lc;
 //PhoneGap Ready variable
 var pgr = false;
 var path = '';
+var mediaRec = null;
 
 //var capture = navigator.device.capture;
 
@@ -64,12 +65,40 @@ function stopAudio() {
 
 
 
+/*************************** PLAY AUDIO - INI ***************************/
+
+// Play audio
+//
+function playAudio(url) {
+    // Play the audio file at url
+    var my_media = new Media(mediaRec,
+        // success callback
+        function() {
+            console.log("playAudio():Audio Success");
+        },
+        // error callback
+        function(err) {
+            console.log("playAudio():Audio Error: "+err);
+        }
+    );
+
+    // Play audio
+    my_media.play();
+
+    // Pause after 10 seconds
+    setTimeout(function() {
+        my_media.stop();
+    }, 10000);
+}
+
+/*************************** PLAY AUDIO - END ***************************/
+
 
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
     alert('entra recordAudio');
     var src = "myrecording_001.amr";
-    var mediaRec = new Media(src, onSuccess, onError);
+    mediaRec = new Media(src, onSuccess, onError);
 
     // Record audio
     mediaRec.startRecord();
@@ -83,6 +112,7 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             mediaRec.stopRecord();
+            alert('stopRecord');
         }
     }, 1000);
     alert('sale recordAudio');
@@ -90,9 +120,9 @@ function recordAudio() {
 // device APIs are available
 //
 function onDeviceReady() {
-    alert('entra onDeviceReady');
-    recordAudio();
-    alert('sale onDeviceReady');
+    //alert('entra onDeviceReady');
+    //recordAudio();
+    //alert('sale onDeviceReady');
 }
 
 // onSuccess Callback
@@ -111,7 +141,7 @@ function onError(error) {
 // Set audio position
 //
 function setAudioPosition(position) {
-    document.getElementById('audio_position').innerHTML = position;
+    document.getElementById('audio_positionRecord').innerHTML = position;
 }
 
 /*************************** RECORD AUDIO - END ***************************/
