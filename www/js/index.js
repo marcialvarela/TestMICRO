@@ -62,16 +62,17 @@ function captureAudio() {
 /*************************** PLAY AUDIO - INI ***************************/
 // Audio player
 //
+var meFile = null;
 var my_media = null;
 var mediaTimer = null;
-var mediaRec = null;
+//var mediaRec = null;
 
 
 // Play audio
 //
 function playAudio() {
     // Create Media object from src
-    var src = "http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
+    var src = meFile;
     my_media = new Media(src, onSuccess('Play'), onError);
 
     // Play audio
@@ -104,10 +105,10 @@ function playAudio() {
 function recordAudio() {
     alert('entra recordAudio');
     var src = "myrecording_001.amr";
-    mediaRec = new Media(src, onSuccess('Record'), onError);
+    meFile = new Media(src, onSuccess('Record'), onError);
 
     // Record audio
-    mediaRec.startRecord();
+    meFile.startRecord();
 
     // Stop recording after 10 sec
     var recTime = 0;
@@ -116,12 +117,12 @@ function recordAudio() {
         setAudioPosition(recTime + " sec");
         if (recTime >= 10) {
             clearInterval(recInterval);
-            mediaRec.stopRecord();
+            meFile.stopRecord();
         }
     }, 1000);
 
     if (recTime >= 10) {
-        alert(mediaRec.length);
+        alert(meFile.length);
         alert('sale recordAudio');
     }
 }
