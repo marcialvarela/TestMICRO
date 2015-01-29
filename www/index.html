@@ -73,7 +73,9 @@
         function captureSuccess(mediaFiles) {
             var i, len;
             for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-                uploadFile(mediaFiles[i]);
+                //uploadFile(mediaFiles[i]);
+                alert('captureSuccess: ' + i.toString());
+                playAudio(mediaFiles[i]);
             }
         }
 
@@ -90,6 +92,19 @@
             // Launch device audio recording application,
             // allowing user to capture up to 2 audio clips
             navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2, duration: 10});
+        }
+
+        function onSuccess() {
+            //console.log("recordAudio():Audio Success");
+            console.log(" :Audio Success");
+        }
+        function playAudio(mediaFile) {
+            alert('Entra en playAudio');
+            // Launch device audio recording application,
+            // allowing user to capture up to 2 audio clips
+            //navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2, duration: 10});
+            my_media = new Media(mediaFile, onSuccess, captureError);
+            my_media.play();
         }
 
         // Upload files to server
