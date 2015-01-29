@@ -76,8 +76,8 @@ var captureSuccess  = function(mediaFiles) {
 
 // capture error callback
 var captureError = function(error) {
-    alert('Entra en captureError');
-    navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+    var msg = 'An error occurred during capture: ' + error.code;
+    navigator.notification.alert(msg, null, 'Uh oh!');
 };
 
 function captureAudio() {
@@ -89,8 +89,8 @@ function captureAudio() {
 
 function captureAudio2() {
     alert('Entra en captureAudio2');
-    var options = { limit: 2, duration: 10 };
-    navigator.device.capture.captureAudio(captureSuccess2, captureError, {limit: 1, duration: 10});
+    var options = { limit: 1, duration: 6 };
+    navigator.device.capture.captureAudio(captureSuccess2, captureError, options);
     alert('Sale de captureAudio2');
 }
 

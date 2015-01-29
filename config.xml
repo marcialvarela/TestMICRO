@@ -54,7 +54,7 @@
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
     <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
+        <param name="android-package" value="org.apache.cordova.Device" />
     </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file" />
