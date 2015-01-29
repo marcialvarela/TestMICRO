@@ -47,6 +47,7 @@
 
     <!--Android platform-->
     <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media" />
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
     <feature name="App">

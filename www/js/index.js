@@ -142,10 +142,10 @@ function playAudio(src) {
 function recordAudio() {
     alert('Entra en recordAudio');
 
-    meFile = new Media("myfile001.wav", onSuccess('Record'), onError);
+    var src = "myfile001.wav";
+    var meFile1 = new Media(src, onSuccess('Record'), onError);
     // Record audio
-    alert(meFile.pathname);
-    meFile.startRecord();
+    meFile1.startRecord();
     // Stop recording after 10 sec
     var recTime = 0;
     var recInterval = setInterval(function() {
@@ -153,10 +153,10 @@ function recordAudio() {
         setAudioPosition(recTime + " sec");
         if (recTime >= 10) {
             clearInterval(recInterval);
-            meFile.stopRecord();
+            meFile1.stopRecord();
             alert('End record');
-            alert(meFile);
-            meFile.play();
+            meFile1.play();
+            alert('End play');
         }
     }, 1000);
 
