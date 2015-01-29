@@ -86,6 +86,44 @@ function captureAudio() {
     navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2, duration: 10});
     alert('Sale de captureAudio');
 }
+
+function captureAudio2() {
+
+    alert('Entra en captureAudio2()');
+    navigator.device.capture.captureAudio(function(mediaFiles){
+
+        alert('Pasa por 1');
+        // mediaFiles will be an array of MediaFile objects
+
+        var options = new FileUploadOptions();
+        alert('Pasa por 2');
+        var ft = new FileTransfer();
+        alert('Pasa por 3');
+        var fileURI = mediaFiles[0].fullPath;
+        alert('Pasa por 4');
+
+
+        options.params = _.extend({}, {id: 5});
+        options.fileKey = "file";
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+        options.headers = {Connection: "close"};
+
+        alert('Pasa por 5');
+        alert(options.fileName);
+        
+        // upload the file to the server
+/*        ft.upload(fileURI, encodeURI("http://www.setfive.com/upload.php"), function(resp){
+            var data = JSON.parse(resp.response);
+            alert( data.successMsg );
+        }, function(error){
+            alert("Sorry! Something went wrong. Please try again.");
+        }, options);
+*/
+
+    }, {limit: 1, duration: 10});
+    // mediaFiles will be an array of MediaFile objects
+
+}
 /*************************** CAPTURE AUDIO - END ***************************/
 
 
@@ -144,6 +182,8 @@ function recordAudio() {
 
     var src = "myfile001.wav";
     var meFile1 = new Media(src, onSuccess('Record'), onError);
+
+    navigator.notification.beep(1);
     // Record audio
     meFile1.startRecord();
     // Stop recording after 10 sec
@@ -154,8 +194,11 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             meFile1.stopRecord();
+            navigator.notification.beep(1);
             alert('End record');
-            meFile1.play();
+            //meFile1.play();
+            var src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
+            playAudio(src);
             alert('End play');
         }
     }, 1000);
