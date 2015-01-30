@@ -175,6 +175,8 @@ function gotFS(fileSystem) {
 
 function gotFileEntry(fileEntry) {
     alert('File URI: ' + fileEntry.toURI());
+
+    return fileEntry.toURI();
 }
 
 /*************************** RECORD AUDIO - INI ***************************/
@@ -183,12 +185,14 @@ function recordAudio() {
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
 
-    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
+    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 
+    alert(myFilePath);
     var src = myFileName;
+    alert(src);
     var meFile1 = new Media(src, onSuccess('Record'), onError);
 
-    navigator.notification.beep(1);
+    //navigator.notification.beep(1);
     // Record audio
     meFile1.startRecord();
     // Stop recording after 10 sec
@@ -199,7 +203,7 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             meFile1.stopRecord();
-            navigator.notification.beep(1);
+            //navigator.notification.beep(1);
             alert('End record');
             //meFile1.play();
             var myAudioWav = document.getElementById('audioWav');
