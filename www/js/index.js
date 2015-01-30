@@ -183,16 +183,8 @@ function gotFileEntry(fileEntry) {
 function recordAudio() {
     alert('Entra en recordAudio');
 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
+    var meFile1 = new Media(myFileName, onSuccess('Record'), onError);
 
-    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
-
-    alert(myFilePath);
-    var src = myFileName;
-    alert(src);
-    var meFile1 = new Media(src, onSuccess('Record'), onError);
-
-    //navigator.notification.beep(1);
     // Record audio
     meFile1.startRecord();
     // Stop recording after 10 sec
@@ -203,12 +195,11 @@ function recordAudio() {
         if (recTime >= 10) {
             clearInterval(recInterval);
             meFile1.stopRecord();
-            //navigator.notification.beep(1);
             alert('End record');
-            //meFile1.play();
-            var myAudioWav = document.getElementById('audioWav');
-            myAudioWav.src = meFile1;
-            playAudio(myAudioWav.src);
+
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+            var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+            playAudio(myFilePath);
             alert('End play');
         }
     }, 1000);
