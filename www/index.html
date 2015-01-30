@@ -31,18 +31,16 @@
     </head>
     <body>
         <div class="app">
-            <h1>Capture & Play Audio - PhoneGap platform</h1>
+            <h1>Capture Photo & Audio - PhoneGap platform</h1>
             <br/>
 
-            <button onclick="capturePhoto();" style="height: 60px; width: 300px; font-size: 30px">Capture Photo</button> <br>
+            <img style="display:none;width:200px;height:200px;" id="smallImage" src="" />
             <br/>
-            <button onclick="capturePhotoEdit();" style="height: 60px; width: 300px; font-size: 30px">Capture Editable Photo</button> <br>
+            <button onclick="capturePhoto();" style="height: 60px; width: 300px; font-size: 22px">Capture Photo</button> <br>
+            <button onclick="capturePhotoEdit();" style="height: 60px; width: 300px; font-size: 22px">Capture Editable Photo</button> <br>
             <br/>
-            <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" style="height: 60px; width: 300px; font-size: 30px">From Photo Library</button><br>
-            <br/>
-            <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);" style="height: 60px; width: 300px; font-size: 30px">From Photo Album</button><br>
-            <br/>
-            <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+            <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" style="height: 60px; width: 300px; font-size: 220px">From Photo Library</button><br>
+            <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);" style="height: 60px; width: 300px; font-size: 22px">From Photo Album</button><br>
             <br/>
             <img style="display:none;" id="largeImage" src="" />
             <br/>
