@@ -171,7 +171,7 @@ function playAudio(src) {
 function recordAudio() {
     alert('Entra en recordAudio');
 
-    var src = "myfile001.wav";
+    var src = "myfile001.ogg";
     var meFile1 = new Media(src, onSuccess('Record'), onError);
 
     navigator.notification.beep(1);
@@ -188,9 +188,9 @@ function recordAudio() {
             navigator.notification.beep(1);
             alert('End record');
             //meFile1.play();
-            var myAudio = document.getElementById('audioCap');
+            var myAudioOgg = document.getElementById('audioOgg');
             myAudio.src = meFile1;
-            playAudio(myAudio.src);
+            playAudio(myAudioOgg.src);
             alert('End play');
         }
     }, 1000);
