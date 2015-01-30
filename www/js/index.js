@@ -170,7 +170,7 @@ var myFileName = "myfile001.wav"
 
 function gotFS(fileSystem) {
     alert('got FS');
-    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
 function gotFileEntry(fileEntry) {
@@ -181,9 +181,9 @@ function gotFileEntry(fileEntry) {
 function recordAudio() {
     alert('Entra en recordAudio');
 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
 
-    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 
     var src = myFileName;
     var meFile1 = new Media(src, onSuccess('Record'), onError);
