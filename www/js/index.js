@@ -60,95 +60,29 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
     }
 };
 
-/***************************     AUDIO - INI     ***************************/
-/***************************     AUDIO - INI     ***************************/
-/***************************     AUDIO - INI     ***************************/
-
-/*************************** CAPTURE AUDIO - INI ***************************/
-// capture callback
-var captureSuccess  = function(mediaFiles) {
-    alert('Entra en captureSuccess');
-    alert(mediaFiles);
-    var i, len;
-    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-        path = mediaFiles[i].fullPath;
-        alert(path);
-        // do something interesting with the file
-    }
-    alert(path);
-};
-
-// capture error callback
-var captureError = function(error) {
-    var msg = 'An error occurred during capture: ' + error.code;
-    navigator.notification.alert(msg, null, 'Uh oh!');
-};
-
-function captureAudio() {
-    alert('Entra en captureAudio');
-    var options = { limit: 2, duration: 10 };
-    navigator.device.capture.captureAudio(captureSuccess, captureError, {limit: 2, duration: 10});
-    alert('Sale de captureAudio');
-}
-
-var captureSuccess2  = function(mediaFiles) {
-    alert('Entra en captureSuccess2');
-    // mediaFiles will be an array of MediaFile objects
-
-    var options = new FileUploadOptions();
-    alert('Pasa por 2');
-    var ft = new FileTransfer();
-    alert('Pasa por 3');
-    var fileURI = mediaFiles[0].fullPath;
-    alert('Pasa por 4');
-
-
-    options.params = _.extend({}, {id: 5});
-    options.fileKey = "file";
-    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-    options.headers = {Connection: "close"};
-
-    alert('Pasa por 5');
-    alert(options.fileName);
-};
-function captureAudio2() {
-    alert('Entra en captureAudio2');
-    navigator.device.capture.captureAudio(captureSuccess2, captureError, { limit: 1, duration: 4 });
-    alert('Sale de captureAudio2');
-}
-
-
-
-/*************************** CAPTURE AUDIO - END ***************************/
-
-
+/***************************   AUDIO - INI   ***************************/
+/***************************   AUDIO - INI   ***************************/
+/***************************   AUDIO - INI   ***************************/
 
 
 /*************************** PLAY AUDIO - INI ***************************/
 // Audio player
 //
-var meFile = null;
 var my_media = null;
 var mediaTimer = null;
-//var mediaRec = null;
-
-
-var myFileName = "myfile001.wav"
+var myFileName = "myfile001.wav";
 
 
 
 function gotFS(fileSystem) {
-    alert('got FS');
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
 function gotFileEntry(fileEntry) {
 
     var fileUri = fileEntry.toURI();
-    alert('File URI: ' + fileEntry.toURI());
 
     var scr = fileEntry.toURI();
-    alert('scr: ' + scr);
 
     my_media = new Media(scr, onSuccess('Play'), onError);
 
@@ -183,34 +117,6 @@ function playAudio()
 {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
-
-    /*
-    alert('myFilePath: ' + myFilePath);
-    my_media = new Media(myFilePath, onSuccess('Play'), onError);
-
-    // Play audio
-    my_media.play();
-
-    // Update my_media position every second
-    if (mediaTimer == null) {
-        mediaTimer = setInterval(function() {
-            // get my_media position
-            my_media.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        setAudioPlayPosition((position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
-                }
-            );
-        }, 1000);
-    }
-    */
 }
 /*************************** PLAY AUDIO - END ***************************/
 
@@ -282,9 +188,10 @@ function exitApp() {
 
 
 
-/***************************     AUDIO - END     ***************************/
-/***************************     AUDIO - END     ***************************/
-/***************************     AUDIO - END     ***************************/
+/***************************   AUDIO - END   ***************************/
+/***************************   AUDIO - END   ***************************/
+/***************************   AUDIO - END   ***************************/
+
 
 
 
