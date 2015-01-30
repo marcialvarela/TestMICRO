@@ -33,6 +33,27 @@
         <div class="app">
             <h1>Capture & Play Audio - PhoneGap platform</h1>
             <br/>
+
+            <button onclick="capturePhoto();" style="height: 60px; width: 300px; font-size: 30px">Capture Photo</button> <br>
+            <br/>
+            <button onclick="capturePhotoEdit();" style="height: 60px; width: 300px; font-size: 30px">Capture Editable Photo</button> <br>
+            <br/>
+            <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" style="height: 60px; width: 300px; font-size: 30px">From Photo Library</button><br>
+            <br/>
+            <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);" style="height: 60px; width: 300px; font-size: 30px">From Photo Album</button><br>
+            <br/>
+            <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+            <br/>
+            <img style="display:none;" id="largeImage" src="" />
+            <br/>
+            <br/>
+            <button id="exitAppPhoto" value="exitAppPhoto" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <button id="audioRecord" value="audioRecord" onclick="recordAudio();" style="height: 60px; width: 200px; font-size: 40px">Record</button>
             <button id="captureRecord" value="captureRecord" onclick="captureAudio2();" style="height: 60px; width: 200px; font-size: 40px">Capture 2</button>
             <p id="media">Recording audio...</p>
