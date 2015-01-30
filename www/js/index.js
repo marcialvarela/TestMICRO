@@ -129,6 +129,8 @@ var mediaTimer = null;
 //var mediaRec = null;
 
 
+var myFileName = "myfile001.wav"
+
 // Play audio
 //
 function playAudio(src) {
@@ -162,11 +164,43 @@ function playAudio(src) {
         }, 1000);
     }
 }
+
+function playAudio2()
+{
+    alert('Entra en playAudio2');
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
+    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
+
+    my_media = new Media(myFilePath, onSuccess('Play'), onError);
+
+    // Play audio
+    my_media.play();
+
+    // Update my_media position every second
+    if (mediaTimer == null) {
+        mediaTimer = setInterval(function() {
+            // get my_media position
+            my_media.getCurrentPosition(
+                // success callback
+                function(position) {
+                    if (position > -1) {
+                        setAudioPlayPosition((position) + " sec");
+                    }
+                },
+                // error callback
+                function(e) {
+                    console.log("Error getting pos=" + e);
+                    setAudioPosition("Error: " + e);
+                }
+            );
+        }, 1000);
+    }
+
+}
 /*************************** PLAY AUDIO - END ***************************/
 
 
 
-var myFileName = "myfile001.wav"
 
 function gotFS(fileSystem) {
     alert('got FS');
@@ -193,14 +227,15 @@ function recordAudio() {
         recTime = recTime + 1;
         setAudioPosition(recTime + " sec");
         if (recTime >= 10) {
+            setAudioPosition("Rec Audio OK");
             clearInterval(recInterval);
             meFile1.stopRecord();
             alert('End record');
 
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-            var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
-            playAudio(myFilePath);
-            alert('End play');
+            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+            //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+            //playAudio(myFilePath);
+            //alert('End play');
         }
     }, 1000);
 
