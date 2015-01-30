@@ -34,6 +34,7 @@
             <h1>Capture Photo & Audio - PhoneGap platform</h1>
             <br/>
 
+<!-- camera.Capture
             <img style="display:none;width:200px;height:200px;" id="smallImage" src="" />
             <br/>
             <button onclick="capturePhoto();" style="height: 60px; width: 300px; font-size: 22px">Capture Photo</button> <br>
@@ -47,15 +48,16 @@
             <br/>
             <button id="exitAppPhoto" value="exitAppPhoto" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
             <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+-->
             <br/>
             <button id="audioRecord" value="audioRecord" onclick="recordAudio();" style="height: 60px; width: 200px; font-size: 40px">Record</button>
             <button id="captureRecord" value="captureRecord" onclick="captureAudio2();" style="height: 60px; width: 200px; font-size: 40px">Capture 2</button>
             <p id="media">Recording audio...</p>
             <p id="audio_positionRecord"></p>
+            <br/>
+            <audio controls>
+                <source id="audioCap" src="" type="audio/ogg">
+            </audio>
             <br/>
             <button id="audioPlay" value="audioPlay" onclick="playAudio();" style="height: 60px; width: 200px; font-size: 40px" >Play</button>
             <p id="audio_positionPlay"></p>

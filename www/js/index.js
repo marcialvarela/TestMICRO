@@ -188,8 +188,9 @@ function recordAudio() {
             navigator.notification.beep(1);
             alert('End record');
             //meFile1.play();
-            var src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
-            playAudio(src);
+            var myAudio = document.getElementById('audioCap');
+            myAudio.src = meFile1;
+            playAudio(myAudio.src);
             alert('End play');
         }
     }, 1000);
