@@ -166,12 +166,26 @@ function playAudio(src) {
 
 
 
+var myFileName = "myfile001.wav"
+
+function gotFS(fileSystem) {
+    alert('got FS');
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+}
+
+function gotFileEntry(fileEntry) {
+    alert('File URI: ' + fileEntry.toURI());
+}
 
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
     alert('Entra en recordAudio');
 
-    var src = "myfile001.ogg";
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
+
+    var src = myFileName;
     var meFile1 = new Media(src, onSuccess('Record'), onError);
 
     navigator.notification.beep(1);
@@ -188,9 +202,9 @@ function recordAudio() {
             navigator.notification.beep(1);
             alert('End record');
             //meFile1.play();
-            var myAudioOgg = document.getElementById('audioOgg');
-            myAudio.src = meFile1;
-            playAudio(myAudioOgg.src);
+            var myAudioWav = document.getElementById('audioWav');
+            myAudioWav.src = meFile1;
+            playAudio(myAudioWav.src);
             alert('End play');
         }
     }, 1000);

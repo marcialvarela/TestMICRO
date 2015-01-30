@@ -37,8 +37,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.576923" vertical-offset="399" max-vertical-offset="1479">
-              <caret line="58" column="36" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="36" />
+            <state vertical-scroll-proportion="-22.576923" vertical-offset="399" max-vertical-offset="1462">
+              <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#button#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -52,8 +52,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.304799" vertical-offset="2258" max-vertical-offset="6443">
-              <caret line="192" column="38" selection-start-line="192" selection-start-column="38" selection-end-line="192" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.3994812" vertical-offset="2616" max-vertical-offset="6681">
+              <caret line="172" column="38" selection-start-line="172" selection-start-column="38" selection-end-line="172" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -489,8 +489,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.576923" vertical-offset="399" max-vertical-offset="1479">
-          <caret line="58" column="36" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="36" />
+        <state vertical-scroll-proportion="-22.576923" vertical-offset="399" max-vertical-offset="1462">
+          <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#button#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -502,8 +502,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.304799" vertical-offset="2258" max-vertical-offset="6443">
-          <caret line="192" column="38" selection-start-line="192" selection-start-column="38" selection-end-line="192" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.3994812" vertical-offset="2616" max-vertical-offset="6681">
+          <caret line="172" column="38" selection-start-line="172" selection-start-column="38" selection-end-line="172" selection-end-column="38" />
           <folding />
         </state>
       </provider>
