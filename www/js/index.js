@@ -143,7 +143,37 @@ function gotFileEntry(fileEntry) {
     var fileUri = fileEntry.toURI();
     alert('File URI: ' + fileEntry.toURI());
 
-    return fileUri;
+    var scr = fileEntry.toURI();
+    alert('scr: ' + scr);
+
+    my_media = new Media(scr, onSuccess('Play'), onError);
+
+    // Play audio
+    my_media.play();
+    alert('play');
+
+    // Update my_media position every second
+    if (mediaTimer == null) {
+        alert('mediaTimer != null');
+        mediaTimer = setInterval(function() {
+            // get my_media position
+            my_media.getCurrentPosition(
+                // success callback
+                function(position) {
+                    if (position > -1) {
+                        setAudioPlayPosition((position) + " sec");
+                    }
+                },
+                // error callback
+                function(e) {
+                    console.log("Error getting pos=" + e);
+                    setAudioPosition("Error: " + e);
+                }
+            );
+        }, 1000);
+    }
+    alert('mediaTimer == null');
+
 }
 
 // Play audio
