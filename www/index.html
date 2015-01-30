@@ -31,7 +31,40 @@
     </head>
     <body>
         <div class="app">
-            <h1>Capture Photo & Audio - PhoneGap platform</h1>
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td colspan="2">
+                        <h1>Capture Photo & Audio - PhoneGap platform</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="audioRecord" value="audioRecord" onclick="recordAudio();" style="height: 60px; width: 200px; font-size: 40px">Record</button>
+                    </td>
+                    <td>
+                        <button id="audioPlay" value="audioPlay" onclick="playAudio2();" style="height: 60px; width: 200px; font-size: 40px" >Play</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p id="mediaR">Recording audio...</p>
+                        <p id="audio_positionRecord"></p>
+                    </td>
+                    <td>
+                        <p id="mediaP">Playing audio...</p>
+                        <p id="audio_positionPlay"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <br/>
+                        <br/>
+                        <button id="exitApp" value="exitApp" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
+                        <br/>
+                        <br/>
+                    </td>
+                </tr>
+            </table>
             <br/>
 
 <!-- camera.Capture
@@ -49,23 +82,6 @@
             <button id="exitAppPhoto" value="exitAppPhoto" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
             <br/>
 -->
-            <br/>
-            <button id="audioRecord" value="audioRecord" onclick="recordAudio();" style="height: 60px; width: 200px; font-size: 40px">Record</button>
-            <button id="captureRecord" value="captureRecord" onclick="captureAudio2();" style="height: 60px; width: 200px; font-size: 40px">Capture 2</button>
-            <p id="media">Recording audio...</p>
-            <p id="audio_positionRecord"></p>
-            <br/>
-            <audio controls>
-                <source id="audioWav" src="" type="audio/wav">
-            </audio>
-            <br/>
-            <br/>
-            <button id="audioPlay" value="audioPlay" onclick="playAudio2();" style="height: 60px; width: 200px; font-size: 40px" >Play</button>
-            <p id="audio_positionPlay"></p>
-            <button id="exitApp" value="exitApp" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
-            <br/>
-            <br/>
-            <br/>
         </div>
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" charset="utf-8" src="json2.js"></script>
