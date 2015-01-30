@@ -60,6 +60,10 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
     }
 };
 
+/***************************     AUDIO - INI     ***************************/
+/***************************     AUDIO - INI     ***************************/
+/***************************     AUDIO - INI     ***************************/
+
 /*************************** CAPTURE AUDIO - INI ***************************/
 // capture callback
 var captureSuccess  = function(mediaFiles) {
@@ -150,18 +154,16 @@ function gotFileEntry(fileEntry) {
 
     // Play audio
     my_media.play();
-    alert('play');
 
     // Update my_media position every second
     if (mediaTimer == null) {
-        alert('mediaTimer != null');
         mediaTimer = setInterval(function() {
             // get my_media position
             my_media.getCurrentPosition(
                 // success callback
                 function(position) {
                     if (position > -1) {
-                        setAudioPlayPosition((position) + " sec");
+                        setAudioPlayPosition("Playing audio..." + (position) + " sec");
                     }
                 },
                 // error callback
@@ -172,50 +174,17 @@ function gotFileEntry(fileEntry) {
             );
         }, 1000);
     }
-    alert('mediaTimer == null');
-
 }
 
 // Play audio
 //
-function playAudio(src) {
-    // Create Media object from src
-    //var src = meFile;
-    alert('Entra en Play Audio');
-    alert(src);
-    //src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3";
-    my_media = new Media(src, onSuccess('Play'), onError);
 
-    // Play audio
-    my_media.play();
-
-    // Update my_media position every second
-    if (mediaTimer == null) {
-        mediaTimer = setInterval(function() {
-            // get my_media position
-            my_media.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        setAudioPlayPosition((position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
-                }
-            );
-        }, 1000);
-    }
-}
-
-function playAudio2()
+function playAudio()
 {
-    alert('Entra en playAudio2');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 
+    /*
     alert('myFilePath: ' + myFilePath);
     my_media = new Media(myFilePath, onSuccess('Play'), onError);
 
@@ -241,7 +210,7 @@ function playAudio2()
             );
         }, 1000);
     }
-
+    */
 }
 /*************************** PLAY AUDIO - END ***************************/
 
@@ -251,7 +220,6 @@ function playAudio2()
 
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
-    alert('Entra en recordAudio');
 
     var meFile1 = new Media(myFileName, onSuccess('Record'), onError);
 
@@ -261,59 +229,16 @@ function recordAudio() {
     var recTime = 0;
     var recInterval = setInterval(function() {
         recTime = recTime + 1;
-        setAudioPosition(recTime + " sec");
+        setAudioPosition("Recording audio..." + recTime + " sec");
         if (recTime >= 10) {
-            setAudioPosition("Rec Audio OK");
+            setAudioPosition("Record Audio --> OK");
             clearInterval(recInterval);
             meFile1.stopRecord();
-            alert('End record');
-
-            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-            //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, fail);
-            //playAudio(myFilePath);
-            //alert('End play');
         }
     }, 1000);
 
 }
 /*************************** RECORD AUDIO - END ***************************/
-
-
-// device APIs are available
-//
-function onDeviceReady() {
-    //alert('entra onDeviceReady');
-    //recordAudio();
-    //alert('sale onDeviceReady');
-}
-
-
-
-
-/*************************** PAUSE AUDIO - INI ***************************/
-// Pause audio
-//
-function pauseAudio() {
-    if (my_media) {
-        my_media.pause();
-    }
-}
-/*************************** PAUSE AUDIO - END ***************************/
-
-
-
-/*************************** STOP AUDIO - INI ***************************/
-// Stop audio
-//
-function stopAudio() {
-    if (my_media) {
-        my_media.stop();
-    }
-    clearInterval(mediaTimer);
-    mediaTimer = null;
-}
-/*************************** STOP AUDIO - END ***************************/
-
 
 
 /*************************** LABEL SUCCESS/ERROR - INI ***************************/
@@ -331,7 +256,6 @@ function onError(error) {
           'message: ' + error.message + '\n');
 }
 /*************************** LABEL SUCCESS/ERROR - END ***************************/
-
 
 
 
@@ -356,6 +280,11 @@ function exitApp() {
 }
 /*************************** EXIT APP - END ***************************/
 
+
+
+/***************************     AUDIO - END     ***************************/
+/***************************     AUDIO - END     ***************************/
+/***************************     AUDIO - END     ***************************/
 
 
 
