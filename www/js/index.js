@@ -131,6 +131,21 @@ var mediaTimer = null;
 
 var myFileName = "myfile001.wav"
 
+
+
+function gotFS(fileSystem) {
+    alert('got FS');
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
+}
+
+function gotFileEntry(fileEntry) {
+
+    var fileUri = fileEntry.toURI();
+    alert('File URI: ' + fileEntry.toURI());
+
+    return fileUri;
+}
+
 // Play audio
 //
 function playAudio(src) {
@@ -171,6 +186,7 @@ function playAudio2()
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 
+    alert('myFilePath: ' + myFilePath);
     my_media = new Media(myFilePath, onSuccess('Play'), onError);
 
     // Play audio
@@ -202,16 +218,6 @@ function playAudio2()
 
 
 
-function gotFS(fileSystem) {
-    alert('got FS');
-    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
-}
-
-function gotFileEntry(fileEntry) {
-    alert('File URI: ' + fileEntry.toURI());
-
-    return fileEntry.toURI();
-}
 
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
