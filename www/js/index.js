@@ -133,15 +133,20 @@ function recordAudio() {
     meFile1.startRecord();
     // Stop recording after 10 sec
     var recTime = 0;
-    var recInterval = setInterval(function() {
-        recTime = recTime + 1;
-        setAudioPosition("Recording audio..." + recTime + " sec");
-        if (recTime >= 30) {
-            setAudioPosition("Record Audio --> OK");
-            clearInterval(recInterval);
-            meFile1.stopRecord();
-        }
-    }, 3000);
+    var recInterval = setInterval(
+        function() {
+            recTime = recTime + 1;
+            setAudioPosition("Recording audio..." + recTime + " sec");
+            if (recTime >= 30) {
+                setAudioPosition("Record Audio --> OK");
+                clearInterval(recInterval);
+                meFile1.stopRecord();
+            }
+        },
+
+        document.addEventListener('click', meFile1.stopRecord(), false)
+        
+        , 3000);
 
 }
 /*************************** RECORD AUDIO - END ***************************/
@@ -149,7 +154,7 @@ function recordAudio() {
 
 function stopRecordAudio() {
 
-    var meFile2 = new Media(myFileName, onSuccess('Record'), onError);
+    var meFile2 = new Media(myFileName, onSuccess('StopRecord'), onError);
     meFile2.stopRecord();
 
 }
