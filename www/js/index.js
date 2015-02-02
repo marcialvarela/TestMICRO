@@ -136,16 +136,23 @@ function recordAudio() {
     var recInterval = setInterval(function() {
         recTime = recTime + 1;
         setAudioPosition("Recording audio..." + recTime + " sec");
-        if (recTime >= 10) {
+        if (recTime >= 30) {
             setAudioPosition("Record Audio --> OK");
             clearInterval(recInterval);
             meFile1.stopRecord();
         }
-    }, 1000);
+    }, 3000);
 
 }
 /*************************** RECORD AUDIO - END ***************************/
 
+
+function stopRecordAudio() {
+
+    var meFile2 = new Media(myFileName, onSuccess('Record'), onError);
+    meFile2.stopRecord();
+
+}
 
 /*************************** LABEL SUCCESS/ERROR - INI ***************************/
 // onSuccess Callback
