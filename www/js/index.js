@@ -142,10 +142,9 @@ function recordAudio() {
                 clearInterval(recInterval);
                 meFile1.stopRecord();
             }
-        },
+            document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
 
-        document.addEventListener('click', meFile1.stopRecord(), false)
-        
+        }
         , 3000);
 
 }
