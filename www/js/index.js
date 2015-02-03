@@ -72,6 +72,7 @@ var my_media = null;
 var mediaTimer = null;
 var myFileName = "myfile001.wav";
 var meFileRecord = null;
+var recInterval = null;
 
 
 
@@ -135,7 +136,8 @@ function recordAudio() {
     meFileRecord.startRecord();
     // Stop recording after 10 sec
     var recTime = 0;
-    var recInterval = setInterval(
+    //var recInterval = setInterval(
+    recInterval = setInterval(
         function() {
             recTime = recTime + 1;
             setAudioPosition("Recording audio..." + recTime + " sec");
@@ -154,8 +156,8 @@ function recordAudio() {
 
 function stopRecordAudio() {
 
-    alert('Entra en stopRecordAudio');
     meFileRecord.stopRecord();
+    recInterval.clearInterval();
     setAudioPosition("STOP Recording audio");
 
 }
