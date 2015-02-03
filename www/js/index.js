@@ -73,7 +73,7 @@ var mediaTimer = null;
 var myFileName = "myfile001.wav";
 var meFileRecord = null;
 var recInterval = null;
-
+var setInt = 10;
 
 
 function gotFS(fileSystem) {
@@ -112,6 +112,45 @@ function gotFileEntry(fileEntry) {
     }
 }
 
+function gotFileEntry2(fileEntry) {
+
+    var fileUri = fileEntry.toURI();
+
+    var scr = fileEntry.toURI();
+
+    my_media = new Media(scr, onSuccess('Play'), onError);
+
+    // Play audio
+    my_media.play();
+
+    document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
+
+
+    // Update my_media position every second
+    if (mediaTimer == null) {
+        mediaTimer = setInterval(function() {
+            // get my_media position
+            my_media.getCurrentPosition(
+                // success callback
+                function(position) {
+                    if (position > -1) {
+                        setAudioPlayPosition("Playing audio..." + (position) + " sec");
+                        if (position > setInt) {
+                            document.getElementById('playAudioImg').src="img/black_play.png";
+                            setAudioPlayPosition("Playing audio...0.0 sec");
+                        }
+                    }
+                },
+                // error callback
+                function(e) {
+                    console.log("Error getting pos=" + e);
+                    setAudioPosition("Error: " + e);
+                }
+            );
+        }, setInt * 100);
+    }
+}
+
 // Play audio
 //
 
@@ -119,6 +158,12 @@ function playAudio()
 {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
+}
+
+function playAudio2(){
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
+    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2, onError);
+
 }
 /*************************** PLAY AUDIO - END ***************************/
 
@@ -166,7 +211,7 @@ function recordAudio2() {
             recTime = recTime + 1;
             //recordAudioImg
             setAudioPosition("Recording audio..." + recTime + " sec");
-            if (recTime >= 10) {
+            if (recTime >= setInt) {
                 setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
@@ -176,14 +221,14 @@ function recordAudio2() {
             {
                 var iin = recTime % 2;
                 if (iin == 0) {
-                    document.getElementById('recordAudioImg').src="img/rec2.png";
+                    document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
                 }
                 else{
-                    document.getElementById('recordAudioImg').src="img/rec1.png";
+                    document.getElementById('recordAudioImg').src="img/red_stop_rec_2.png";
                 }
             }
         }
-        , 1000);
+        , setInt * 100);
 
 }
 /*************************** RECORD AUDIO - END ***************************/
@@ -195,10 +240,20 @@ function stopRecordAudio() {
 
     clearInterval(recInterval);
     meFileRecord.stopRecord();
-    document.getElementById('recordAudioImg').src="img/rec1.png";
+    document.getElementById('recordAudioImg').src="img/red_stop_rec_2.png";
     setAudioPosition("STOP Recording audio");
 
 }
+
+function stopAudio() {
+
+    clearInterval(recInterval);
+    meFileRecord.stop();
+    document.getElementById('playAudioImg').src="img/black_play.png";
+    setAudioPlayPosition("STOP Audio");
+
+}
+
 
 /*************************** LABEL SUCCESS/ERROR - INI ***************************/
 // onSuccess Callback
