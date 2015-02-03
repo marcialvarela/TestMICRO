@@ -123,7 +123,7 @@ function gotFileEntry2(fileEntry) {
 
     // Play audio
     my_media.play();
-    playStatus = 0;
+    playStatus = 1;
 
 
     // Update my_media position every second
@@ -175,9 +175,10 @@ function playAudio2(){
         document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
         iniPlayAudio();
     }
-    else
+    else if (playStatus == 1)
     {
         // para el play del audio
+        document.getElementById('playAudioImg').src="img/black_play.png";
         stopAudio();
     }
 
