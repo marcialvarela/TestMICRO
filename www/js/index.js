@@ -71,6 +71,7 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
 var my_media = null;
 var mediaTimer = null;
 var myFileName = "myfile001.wav";
+var meFileRecord = null;
 
 
 
@@ -127,34 +128,33 @@ function playAudio()
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
 
-    var meFile1 = new Media(myFileName, onSuccess('Record'), onError);
+    var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
 
     // Record audio
-    meFile1.startRecord();
+    meFileRecord.startRecord();
     // Stop recording after 10 sec
     var recTime = 0;
     var recInterval = setInterval(
         function() {
             recTime = recTime + 1;
             setAudioPosition("Recording audio..." + recTime + " sec");
-            if (recTime >= 30) {
+            if (recTime >= 10) {
                 setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
-                meFile1.stopRecord();
+                meFileRecord.stopRecord();
             }
-            document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
-
         }
-        , 3000);
+        , 1000);
 
 }
 /*************************** RECORD AUDIO - END ***************************/
 
+//document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
 
 function stopRecordAudio() {
 
-    var meFile2 = new Media(myFileName, onSuccess('StopRecord'), onError);
-    meFile2.stopRecord();
+    alert('Entra en stopRecordAudio');
+    meFileRecord.stopRecord();
 
 }
 
