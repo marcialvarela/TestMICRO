@@ -135,10 +135,10 @@ function gotFileEntry2(fileEntry) {
                 function(position) {
                     if (position > -1) {
                         setAudioPlayPosition("Playing audio..." + (position) + " sec");
-                        if (position >= setInt) {
-                            document.getElementById('playAudioImg').src="img/black_play.png";
-                            setAudioPlayPosition("Playing audio...0.0 sec");
-                        }
+                    }
+                    else {
+                        document.getElementById('playAudioImg').src="img/black_play.png";
+                        setAudioPlayPosition("Playing audio...0.0 sec");
                     }
                 },
                 // error callback
