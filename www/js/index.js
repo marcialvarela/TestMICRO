@@ -100,7 +100,8 @@ function gotFileEntry(fileEntry) {
                 // success callback
                 function(position) {
                     if (position > -1) {
-                        setAudioPlayPosition("Playing... " + (position) + " sec");
+                        setAudioPlayPosition("Play... " + (position) + " sec");
+                        document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
                     }
                 },
                 // error callback
@@ -222,11 +223,6 @@ function stopRecordAudio() {
 //
 function onSuccess(action) {
     console.log(action + " :Audio Success");
-    alert(action);
-    if (action == 'Play'){
-        document.getElementById('playAudioImg').src="img/black_play.png";
-        setAudioPlayPosition("STOP Audio");
-    }
 }
 
 // onError Callback
