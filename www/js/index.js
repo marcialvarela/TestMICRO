@@ -228,6 +228,12 @@ function stopRecordAudio() {
 //
 function onSuccess(action) {
     console.log(action + " :Audio Success");
+    if (action == 'Play'){
+        clearInterval(recInterval);
+        my_media.stop();
+        document.getElementById('playAudioImg').src="img/black_play.png";
+        setAudioPlayPosition("STOP Audio");
+    }
 }
 
 // onError Callback
