@@ -84,11 +84,7 @@ function gotFS(fileSystem) {
 
 function gotFileEntry(fileEntry) {
 
-    alert('gotFileEntry');
-    alert(fileEntry);
-
     var fileUri = fileEntry.toURI();
-
     var scr = fileEntry.toURI();
 
     my_media = new Media(scr, onSuccess('Play'), onError);
@@ -121,10 +117,8 @@ function gotFileEntry(fileEntry) {
 //
 
 function iniPlayAudio(){
-    alert('iniPlayAudio()');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
-    alert(myFileName);
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry(), onError);
 }
 
@@ -228,9 +222,8 @@ function stopRecordAudio() {
 //
 function onSuccess(action) {
     console.log(action + " :Audio Success");
+    alert(action);
     if (action == 'Play'){
-        clearInterval(recInterval);
-        my_media.stop();
         document.getElementById('playAudioImg').src="img/black_play.png";
         setAudioPlayPosition("STOP Audio");
     }
