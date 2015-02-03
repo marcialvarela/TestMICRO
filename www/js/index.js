@@ -102,7 +102,10 @@ function gotFileEntry(fileEntry) {
                     if (position > -1) {
                         setAudioPlayPosition("Play... " + (position) + " sec");
                         document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
-                        alert(position);
+                    }
+                    if (position = -0.001) {
+                        playStatus = 0;
+                        document.getElementById('playAudioImg').src="img/black_play.png";
                     }
                 },
                 // error callback
