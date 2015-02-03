@@ -74,7 +74,8 @@ var myFileName = "myfile001.wav";
 var meFileRecord = null;
 var recInterval = null;
 var setInt = 10;
-
+var recStatus = 0;
+var playStatus = 0;
 
 function gotFS(fileSystem) {
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
@@ -122,6 +123,7 @@ function gotFileEntry2(fileEntry) {
 
     // Play audio
     my_media.play();
+    playStatus = 0;
 
     document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
 
@@ -160,9 +162,24 @@ function playAudio()
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
-function playAudio2(){
+function iniPlayAudio(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2, onError);
+
+}
+
+function playAudio2(){
+
+    if (playStatus == 0)
+    {
+        // Inicia el play del Audio
+        iniPlayAudio();
+    }
+    else
+    {
+        // para el play del audio
+        stopAudio();
+    }
 
 }
 /*************************** PLAY AUDIO - END ***************************/
@@ -198,11 +215,28 @@ function recordAudio() {
 
 function recordAudio2() {
 
+    if (recStatus == 0)
+    {
+        // Inicia la grabación del  Audio
+        iniRecordAudio();
+    }
+    else
+    {
+        // para la grabación del audio
+        stopRecordAudio();
+    }
+}
+/*************************** RECORD AUDIO - END ***************************/
+
+//document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
+function iniRecordAudio() {
+
     //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
     meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
 
     // Record audio
     meFileRecord.startRecord();
+    recStatus = 1;
     // Stop recording after 10 sec
     var recTime = 0;
     //var recInterval = setInterval(
@@ -231,22 +265,20 @@ function recordAudio2() {
         , setInt * 100);
 
 }
-/*************************** RECORD AUDIO - END ***************************/
-
-//document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
 
 function stopRecordAudio() {
 
-
+    recStatus = 0;
     clearInterval(recInterval);
     meFileRecord.stopRecord();
-    document.getElementById('recordAudioImg').src="img/red_stop_rec_2.png";
+    document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
     setAudioPosition("STOP Recording audio");
 
 }
 
 function stopAudio() {
 
+    playStatus = 0;
     clearInterval(recInterval);
     meFileRecord.stop();
     document.getElementById('playAudioImg').src="img/black_play.png";
