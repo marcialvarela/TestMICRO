@@ -150,14 +150,52 @@ function recordAudio() {
         , 1000);
 
 }
+
+function recordAudio2() {
+
+    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+
+    // Record audio
+    meFileRecord.startRecord();
+    // Stop recording after 10 sec
+    var recTime = 0;
+    //var recInterval = setInterval(
+    recInterval = setInterval(
+        function() {
+            recTime = recTime + 1;
+            //recordAudioImg
+            setAudioPosition("Recording audio..." + recTime + " sec");
+            if (recTime >= 10) {
+                setAudioPosition("Record Audio --> OK");
+                clearInterval(recInterval);
+                meFileRecord.stopRecord();
+                document.getElementById('recordAudioImg').src="img/rec1.png";
+            }
+            else
+            {
+                var iin = recTime % 2;
+                if (iin == 0) {
+                    document.getElementById('recordAudioImg').src="img/rec2.png";
+                }
+                else{
+                    document.getElementById('recordAudioImg').src="img/rec1.png";
+                }
+            }
+        }
+        , 1000);
+
+}
 /*************************** RECORD AUDIO - END ***************************/
 
 //document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
 
 function stopRecordAudio() {
 
+
     clearInterval(recInterval);
     meFileRecord.stopRecord();
+    document.getElementById('recordAudioImg').src="img/rec1.png";
     setAudioPosition("STOP Recording audio");
 
 }
