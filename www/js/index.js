@@ -125,8 +125,6 @@ function gotFileEntry2(fileEntry) {
     my_media.play();
     playStatus = 0;
 
-    document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
-
 
     // Update my_media position every second
     if (mediaTimer == null) {
@@ -137,7 +135,7 @@ function gotFileEntry2(fileEntry) {
                 function(position) {
                     if (position > -1) {
                         setAudioPlayPosition("Playing audio..." + (position) + " sec");
-                        if (position > setInt) {
+                        if (position >= setInt) {
                             document.getElementById('playAudioImg').src="img/black_play.png";
                             setAudioPlayPosition("Playing audio...0.0 sec");
                         }
@@ -173,6 +171,7 @@ function playAudio2(){
     if (playStatus == 0)
     {
         // Inicia el play del Audio
+        document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
         iniPlayAudio();
     }
     else
@@ -249,16 +248,16 @@ function iniRecordAudio() {
                 setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
-                document.getElementById('recordAudioImg').src="img/rec1.png";
+                document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
             }
             else
             {
                 var iin = recTime % 2;
                 if (iin == 0) {
-                    document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
+                    document.getElementById('recordAudioImg').src="img/red_stop_playback.png";
                 }
                 else{
-                    document.getElementById('recordAudioImg').src="img/red_stop_rec_2.png";
+                    document.getElementById('recordAudioImg').src="img/red_stop_playback_2.png";
                 }
             }
         }
