@@ -134,11 +134,6 @@ function gotFileEntry2(fileEntry) {
                     if (position > -1) {
                         setAudioPlayPosition("Playing audio..." + (position) + " sec");
                     }
-                    else {
-                        alert('Position: ' + position)
-                        document.getElementById('playAudioImg').src="img/black_play.png";
-                        setAudioPlayPosition("Playing audio...0.0 sec");
-                    }
                 },
                 // error callback
                 function(e) {
@@ -167,7 +162,6 @@ function iniPlayAudio(){
 
 function playAudio2(){
 
-    alert('playStatus: ' + playStatus);
     if (playStatus == 0)
     {
 
