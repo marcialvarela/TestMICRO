@@ -282,7 +282,7 @@ function stopRecordAudio() {
 function stopAudio() {
 
     clearInterval(recInterval);
-    meFileRecord.stop();
+    my_media.stop();
     document.getElementById('playAudioImg').src="img/black_play.png";
     setAudioPlayPosition("STOP Audio");
 
