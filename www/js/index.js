@@ -83,6 +83,8 @@ function gotFS(fileSystem) {
 
 function gotFileEntry2(fileEntry) {
 
+    alert(fileEntry);
+
     var fileUri = fileEntry.toURI();
 
     var scr = fileEntry.toURI();
@@ -117,8 +119,9 @@ function gotFileEntry2(fileEntry) {
 //
 
 function iniPlayAudio(){
+    alert('iniPlayAudio()');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
-    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2, onError);
+    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
 }
 
 function stopAudio() {
@@ -245,12 +248,14 @@ function stopRecordAudio() {
 //
 function onSuccess(action) {
     //console.log("recordAudio():Audio Success");
-    console.log(action + " :Audio Success");
     alert(action);
-    if (action == 'Play')
+    console.log(action + " :Audio Success");
+    if (action == 'Record' || action=='Play' )
     {
+        recStatus = 0;
+        playStatus = 0;
+        document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
         document.getElementById('playAudioImg').src="img/black_play.png";
-        setAudioPlayPosition("STOP Audio");
     }
 }
 
