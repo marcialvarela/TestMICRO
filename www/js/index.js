@@ -81,38 +81,6 @@ function gotFS(fileSystem) {
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
-function gotFileEntry(fileEntry) {
-
-    var fileUri = fileEntry.toURI();
-
-    var scr = fileEntry.toURI();
-
-    my_media = new Media(scr, onSuccess('Play'), onError);
-
-    // Play audio
-    my_media.play();
-
-    // Update my_media position every second
-    if (mediaTimer == null) {
-        mediaTimer = setInterval(function() {
-            // get my_media position
-            my_media.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        setAudioPlayPosition("Playing audio..." + (position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
-                }
-            );
-        }, 1000);
-    }
-}
-
 function gotFileEntry2(fileEntry) {
 
     var fileUri = fileEntry.toURI();
@@ -132,7 +100,7 @@ function gotFileEntry2(fileEntry) {
                 // success callback
                 function(position) {
                     if (position > -1) {
-                        setAudioPlayPosition("Playing audio..." + (position) + " sec");
+                        setAudioPlayPosition("Playing... " + (position) + " sec");
                     }
                 },
                 // error callback
@@ -148,23 +116,22 @@ function gotFileEntry2(fileEntry) {
 // Play audio
 //
 
-function playAudio()
-{
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
-    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
-}
-
 function iniPlayAudio(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2, onError);
+}
 
+function stopAudio() {
+    clearInterval(recInterval);
+    my_media.stop();
+    document.getElementById('playAudioImg').src="img/black_play.png";
+    setAudioPlayPosition("STOP Audio");
 }
 
 function playAudio2(){
 
     if (playStatus == 0)
     {
-
         // Inicia el play del Audio
         playStatus = 1;
         document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
@@ -177,7 +144,6 @@ function playAudio2(){
         document.getElementById('playAudioImg').src="img/black_play.png";
         stopAudio();
     }
-
 }
 /*************************** PLAY AUDIO - END ***************************/
 
@@ -199,9 +165,9 @@ function recordAudio() {
     recInterval = setInterval(
         function() {
             recTime = recTime + 1;
-            setAudioPosition("Recording audio..." + recTime + " sec");
+            setAudioPosition("Recording... " + recTime + " sec");
             if (recTime >= 10) {
-                setAudioPosition("Record Audio --> OK");
+                setAudioPosition("Rec Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
             }
@@ -225,7 +191,6 @@ function recordAudio2() {
 }
 /*************************** RECORD AUDIO - END ***************************/
 
-//document.addEventListener('stopAudioRecord', meFile1.stopRecord(), false)
 function iniRecordAudio() {
 
     //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
@@ -273,14 +238,6 @@ function stopRecordAudio() {
 
 }
 
-function stopAudio() {
-
-    clearInterval(recInterval);
-    my_media.stop();
-    document.getElementById('playAudioImg').src="img/black_play.png";
-    setAudioPlayPosition("STOP Audio");
-
-}
 
 
 /*************************** LABEL SUCCESS/ERROR - INI ***************************/
@@ -289,6 +246,11 @@ function stopAudio() {
 function onSuccess(action) {
     //console.log("recordAudio():Audio Success");
     console.log(action + " :Audio Success");
+    alert(playStatus);
+    if (playStatus == 1) {
+        document.getElementById('playAudioImg').src="img/black_play.png";
+        setAudioPlayPosition("STOP Audio");
+    }
 }
 
 // onError Callback
