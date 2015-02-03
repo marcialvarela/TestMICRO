@@ -82,9 +82,9 @@ function gotFS(fileSystem) {
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
-function gotFileEntry2(fileEntry) {
+function gotFileEntry(fileEntry) {
 
-    alert('gotFileEntry2');
+    alert('gotFileEntry');
     alert(fileEntry);
 
     var fileUri = fileEntry.toURI();
@@ -125,7 +125,7 @@ function iniPlayAudio(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
     alert(myFileName);
-    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry(), onError);
 }
 
 function stopAudio() {
