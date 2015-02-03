@@ -156,8 +156,8 @@ function recordAudio() {
 
 function stopRecordAudio() {
 
+    clearInterval(recInterval);
     meFileRecord.stopRecord();
-    recInterval.clearInterval();
     setAudioPosition("STOP Recording audio");
 
 }
