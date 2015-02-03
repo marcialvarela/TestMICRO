@@ -78,7 +78,6 @@ var recStatus = 0;
 var playStatus = 0;
 
 function gotFS(fileSystem) {
-    alert('gotFS');
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
