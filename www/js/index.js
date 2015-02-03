@@ -109,7 +109,7 @@ function gotFileEntry(fileEntry) {
                 function(e) {
                     console.log("Error getting pos=" + e);
                     setAudioPosition("Error: " + e);
-                },
+                }
             );
         }, setInt * 100);
     }
