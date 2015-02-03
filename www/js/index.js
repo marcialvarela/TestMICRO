@@ -128,7 +128,8 @@ function playAudio()
 /*************************** RECORD AUDIO - INI ***************************/
 function recordAudio() {
 
-    var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
 
     // Record audio
     meFileRecord.startRecord();
@@ -155,6 +156,7 @@ function stopRecordAudio() {
 
     alert('Entra en stopRecordAudio');
     meFileRecord.stopRecord();
+    setAudioPosition("STOP Recording audio");
 
 }
 
