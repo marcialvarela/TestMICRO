@@ -78,11 +78,13 @@ var recStatus = 0;
 var playStatus = 0;
 
 function gotFS(fileSystem) {
+    alert('gotFS');
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
 }
 
 function gotFileEntry2(fileEntry) {
 
+    alert('gotFileEntry2');
     alert(fileEntry);
 
     var fileUri = fileEntry.toURI();
@@ -121,7 +123,9 @@ function gotFileEntry2(fileEntry) {
 function iniPlayAudio(){
     alert('iniPlayAudio()');
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
-    var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
+    //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
+    alert(myFileName);
+    fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
 }
 
 function stopAudio() {
@@ -155,30 +159,6 @@ function playAudio2(){
 
 
 /*************************** RECORD AUDIO - INI ***************************/
-function recordAudio() {
-
-    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-
-    // Record audio
-    meFileRecord.startRecord();
-    // Stop recording after 10 sec
-    var recTime = 0;
-    //var recInterval = setInterval(
-    recInterval = setInterval(
-        function() {
-            recTime = recTime + 1;
-            setAudioPosition("Recording... " + recTime + " sec");
-            if (recTime >= 10) {
-                setAudioPosition("Rec Audio --> OK");
-                clearInterval(recInterval);
-                meFileRecord.stopRecord();
-            }
-        }
-        , 1000);
-
-}
-
 function recordAudio2() {
 
     if (recStatus == 0)
@@ -247,16 +227,7 @@ function stopRecordAudio() {
 // onSuccess Callback
 //
 function onSuccess(action) {
-    //console.log("recordAudio():Audio Success");
-    alert(action);
     console.log(action + " :Audio Success");
-    if (action == 'Record' || action=='Play' )
-    {
-        recStatus = 0;
-        playStatus = 0;
-        document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
-        document.getElementById('playAudioImg').src="img/black_play.png";
-    }
 }
 
 // onError Callback
