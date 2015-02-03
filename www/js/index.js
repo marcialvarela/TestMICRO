@@ -123,8 +123,6 @@ function gotFileEntry2(fileEntry) {
 
     // Play audio
     my_media.play();
-    playStatus = 1;
-
 
     // Update my_media position every second
     if (mediaTimer == null) {
@@ -169,15 +167,19 @@ function iniPlayAudio(){
 
 function playAudio2(){
 
+    alert('playStatus: ' + playStatus);
     if (playStatus == 0)
     {
+
         // Inicia el play del Audio
+        playStatus = 1;
         document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
         iniPlayAudio();
     }
     else if (playStatus == 1)
     {
         // para el play del audio
+        playStatus = 0;
         document.getElementById('playAudioImg').src="img/black_play.png";
         stopAudio();
     }
@@ -279,7 +281,6 @@ function stopRecordAudio() {
 
 function stopAudio() {
 
-    playStatus = 0;
     clearInterval(recInterval);
     meFileRecord.stop();
     document.getElementById('playAudioImg').src="img/black_play.png";
