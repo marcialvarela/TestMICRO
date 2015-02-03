@@ -246,8 +246,9 @@ function stopRecordAudio() {
 function onSuccess(action) {
     //console.log("recordAudio():Audio Success");
     console.log(action + " :Audio Success");
-    alert(playStatus);
-    if (playStatus == 1) {
+    alert(action);
+    if (action == 'Play')
+    {
         document.getElementById('playAudioImg').src="img/black_play.png";
         setAudioPlayPosition("STOP Audio");
     }
