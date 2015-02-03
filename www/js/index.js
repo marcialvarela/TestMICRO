@@ -102,13 +102,14 @@ function gotFileEntry(fileEntry) {
                     if (position > -1) {
                         setAudioPlayPosition("Play... " + (position) + " sec");
                         document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
+                        alert(position);
                     }
                 },
                 // error callback
                 function(e) {
                     console.log("Error getting pos=" + e);
                     setAudioPosition("Error: " + e);
-                }
+                },
             );
         }, setInt * 100);
     }
