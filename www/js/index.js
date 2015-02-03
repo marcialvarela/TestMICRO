@@ -137,6 +137,7 @@ function gotFileEntry2(fileEntry) {
                         setAudioPlayPosition("Playing audio..." + (position) + " sec");
                     }
                     else {
+                        alert('Position: ' + position)
                         document.getElementById('playAudioImg').src="img/black_play.png";
                         setAudioPlayPosition("Playing audio...0.0 sec");
                     }
