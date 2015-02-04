@@ -5,45 +5,20 @@ var pgr = false;
 var path = '';
 
 
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+
 window.addEventListener('load', function () {
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
-
-/*
-var startTime, endTime,password;
-var flag = false;
-window.addEventListener('touchstart',function(event) {
-    startTime = new Date().getTime();
-    flag = false;
-},false);
-window.addEventListener('touchmove',function(event) {
-    flag = true;
-},false);
-window.addEventListener('touchend',function(event) {
-    endTime = new Date().getTime();
-    if(!flag && ((endTime-startTime) > 5000))   //logout after more then 5 sec= 5000 msec
-    {
-        password = prompt("Please enter the exit password");
-        if (password == "123")
-        {
-            alert("Goodbay!");
-            flag = true;
-            navigator.app.exitApp();
-        }
-        else
-        {
-            alert("Wrong password!!!");
-            location = "Main_page.html";
-        }
-    }
-},false);
-*/
 
 var startTime, endTime,password;
 var flag = false;
 var timeToRec = 5;
 
-window.addEventListener('touchstart',function(event) {
+//window.addEventListener('touchstart',function(event) {
+document.getElementById('recordAudioPush').addEventListener('touchstart',function(event) {
     startTime = new Date().getTime();
     flag = false;
 
@@ -55,36 +30,30 @@ window.addEventListener('touchstart',function(event) {
 
 },false);
 
-window.addEventListener('touchmove',function(event) {
+//window.addEventListener('touchmove',function(event) {
+document.getElementById('recordAudioPush').addEventListener('touchmove',function(event) {
     flag = true;
 },false);
 
-window.addEventListener('touchend',function(event) {
+//window.addEventListener('touchend',function(event) {
+document.getElementById('recordAudioPush').addEventListener('touchend',function(event) {
     endTime = new Date().getTime();
     if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 5 sec= 5000 msec
     {
         playStatus=0;
         playAudio2();
-
-/*        password = prompt("Please enter the exit password");
-        if (password == "123")
-        {
-            alert("Goodbay!");
-            flag = true;
-            navigator.app.exitApp();
-        }
-        else
-        {
-            alert("Wrong password!!!");
-            location = "Main_page.html";
-        }
-*/
     }
     else {
         recStatus = 1;
         recordAudioPush();
     }
 },false);
+
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+
+
 
 
 function onDeviceReady() {
@@ -95,9 +64,6 @@ function onDeviceReady() {
         //Set the variable that lets other parts of the program
         //know that PhoneGap is initialized
         pgr = true;
-
-        document.getElementById('recordAudioPush').addEventListener("touchstart",onPushReady,false);
-        document.getElementById('recordAudioPush').addEventListener("touchend",onPullReady,false);
 
         // window.requestFileSystem is recognized, so far so good.
         window.requestFileSystem(1, 0, function(fileSystem){
@@ -225,15 +191,6 @@ function playAudio2(){
 }
 /*************************** PLAY AUDIO - END ***************************/
 
-function onPushReady() {
-    alert('onPushReady');
-}
-
-function onPullReady() {
-    alert('onPullReady');
-}
-
-
 function recordAudioPush() {
     if (recStatus == 0){
         // Inicia la grabación del  Audio
@@ -265,7 +222,7 @@ function iniRecordAudioPush() {
                 setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
-                document.getElementById('recordAudioImg').src="img/micro_push.png";
+                document.getElementById('recordAudioPush').src="img/micro_push.png";
             }
             else
             {
@@ -274,11 +231,11 @@ function iniRecordAudioPush() {
                     document.getElementById('recordAudioPush').src="img/micro_push_rec.png";
                 }
                 else{
-                    document.getElementById('recordAudioImg').src="img/micro_push_rec_2.png";
+                    document.getElementById('recordAudioPush').src="img/micro_push_rec_2.png";
                 }
             }
         }
-        , timeToRec * 100);
+        , timeToRec * 1000);
 
 }
 
