@@ -5,55 +5,22 @@ var pgr = false;
 var path = '';
 
 
+/**************************************** GLOBAL VARIABLE ****************************************/
+var startTime, endTime;
+var flag = false;
+var timeToRec = 5;
+/**************************************** GLOBAL VARIABLE ****************************************/
+
+
+
 /**************************************** WINDOW EVENTS ****************************************/
 /**************************************** WINDOW EVENTS ****************************************/
 /**************************************** WINDOW EVENTS ****************************************/
 
 window.addEventListener('load', function () {
+    document.getElementById('playAudioPush').style.visibility="hidden";
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
-
-var startTime, endTime,password;
-var flag = false;
-var timeToRec = 5;
-
-//window.addEventListener('touchstart',function(event) {
-document.getElementById('recordAudioPush').addEventListener('touchstart',function(event) {
-    startTime = new Date().getTime();
-    flag = false;
-
-    //empezar a grabar
-    document.getElementById('recordAudioPush').src="img/micro_push_rec.png.png";
-
-    recStatus=0;
-    recordAudioPush();
-
-},false);
-
-//window.addEventListener('touchmove',function(event) {
-document.getElementById('recordAudioPush').addEventListener('touchmove',function(event) {
-    flag = true;
-},false);
-
-//window.addEventListener('touchend',function(event) {
-document.getElementById('recordAudioPush').addEventListener('touchend',function(event) {
-    endTime = new Date().getTime();
-    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 5 sec= 5000 msec
-    {
-        playStatus=0;
-        playAudio2();
-    }
-    else {
-        recStatus = 1;
-        recordAudioPush();
-    }
-},false);
-
-/**************************************** WINDOW EVENTS ****************************************/
-/**************************************** WINDOW EVENTS ****************************************/
-/**************************************** WINDOW EVENTS ****************************************/
-
-
 
 
 function onDeviceReady() {
@@ -106,12 +73,54 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
     }
 };
 
+/* ------------- TOUCH START -------------*/
+document.getElementById('recordAudioPush').addEventListener('touchstart',function(event) {
+    startTime = new Date().getTime();
+    flag = false;
+
+
+    document.getElementById('divlegend').style.visibility="visible";
+    document.getElementById('recordAudioPush').src="img/micro_push_rec.png.png";
+
+    recStatus=0;
+    recordAudioPush();
+
+},false);
+
+/* ------------- TOUCH MOVE -------------*/
+document.getElementById('recordAudioPush').addEventListener('touchmove',function(event) {
+    document.getElementById('divlegend').style.visibility="hidden";
+    flag = true;
+},false);
+
+/* ------------- TOUCH END -------------*/
+document.getElementById('recordAudioPush').addEventListener('touchend',function(event) {
+    endTime = new Date().getTime();
+    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 5 sec= 5000 msec
+    {
+        document.getElementById('playAudioPush').style.visibility="visible";
+        playStatus=0;
+    }
+    else {
+        recStatus = 1;  //STOP Record
+        recordAudioPush();
+    }
+    startTime = null;
+    endTime = null;
+    flag = false;
+},false);
+
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+/**************************************** WINDOW EVENTS ****************************************/
+
+
 /***************************   AUDIO - INI   ***************************/
 /***************************   AUDIO - INI   ***************************/
 /***************************   AUDIO - INI   ***************************/
 
 
-/*************************** PLAY AUDIO - INI ***************************/
+/*************************** PLAY AUDIO PUSH - INI ***************************/
 // Audio player
 //
 var my_media = null;
@@ -161,14 +170,13 @@ function gotFileEntry(fileEntry) {
 
 function iniPlayAudio(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
-    //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry(), onError);
 }
 
 function stopAudio() {
     clearInterval(recInterval);
     my_media.stop();
-    document.getElementById('playAudioImg').src="img/black_play.png";
+    document.getElementById('playAudioPush').src="img/black_play.png";
     setAudioPlayPosition("STOP Audio");
 }
 
@@ -178,26 +186,24 @@ function playAudio2(){
     {
         // Inicia el play del Audio
         playStatus = 1;
-        document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
+        document.getElementById('playAudioPush').src="img/black_stop_play_back.png";
         iniPlayAudio();
     }
     else if (playStatus == 1)
     {
         // para el play del audio
         playStatus = 0;
-        document.getElementById('playAudioImg').src="img/black_play.png";
+        document.getElementById('playAudioPush').src="img/black_play.png";
         stopAudio();
     }
 }
-/*************************** PLAY AUDIO - END ***************************/
+/*************************** PLAY AUDIO PUSH - END ***************************/
 
 function recordAudioPush() {
     if (recStatus == 0){
-        // Inicia la grabación del  Audio
         iniRecordAudioPush();
     }
     else{
-        // para la grabación del audio
         stopRecordAudioPull();
     }
 }
@@ -245,73 +251,32 @@ function stopRecordAudioPull(){
     clearInterval(recInterval);
     meFileRecord.stopRecord();
     document.getElementById('recordAudioPush').src="img/micro_push.png";
+
+    playStatus=0;
+    document.getElementById('playAudioPush').style.visibility="visible";
     setAudioPosition("STOP Recording audio");
-
 }
 
 
-/*************************** RECORD AUDIO - INI ***************************/
-function recordAudio2() {
+function playAudioPush(){
 
-    if (recStatus == 0)
+    if (playStatus == 0)
     {
-        // Inicia la grabación del  Audio
-        iniRecordAudio();
+        // Inicia el play del Audio
+        playStatus = 1;
+        document.getElementById('playAudioPush').src="img/stop_red.png";
+        iniPlayAudio();
     }
-    else
+    else if (playStatus == 1)
     {
-        // para la grabación del audio
-        stopRecordAudio();
+        // para el play del audio
+        playStatus = 0;
+        document.getElementById('playAudioPush').src="img/play_red.png";
+        stopAudio();
     }
-}
-
-function iniRecordAudio() {
-
-    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-
-    // Record audio
-    meFileRecord.startRecord();
-    recStatus = 1;
-    // Stop recording after 10 sec
-    var recTime = 0;
-    //var recInterval = setInterval(
-    recInterval = setInterval(
-        function() {
-            recTime = recTime + 1;
-            //recordAudioImg
-            setAudioPosition("Recording audio..." + recTime + " sec");
-            if (recTime >= setInt) {
-                setAudioPosition("Record Audio --> OK");
-                clearInterval(recInterval);
-                meFileRecord.stopRecord();
-                document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
-            }
-            else
-            {
-                var iin = recTime % 2;
-                if (iin == 0) {
-                    document.getElementById('recordAudioImg').src="img/red_stop_playback.png";
-                }
-                else{
-                    document.getElementById('recordAudioImg').src="img/red_stop_playback_2.png";
-                }
-            }
-        }
-        , setInt * 100);
 
 }
 
-function stopRecordAudio() {
-
-    recStatus = 0;
-    clearInterval(recInterval);
-    meFileRecord.stopRecord();
-    document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
-    setAudioPosition("STOP Recording audio");
-
-}
-/*************************** RECORD AUDIO - END ***************************/
 
 
 
@@ -350,7 +315,6 @@ function setAudioPlayPosition(position) {
 /*************************** EXIT APP - INI ***************************/
 function exitApp() {
 
-    /* MIRAR SI FUNCIONA  */
     clearInterval(recInterval);
     if (recStatus == 1){
         meFileRecord.stopRecord();
@@ -371,101 +335,68 @@ function exitApp() {
 
 
 
+/*************************** RECORD AUDIO - INI ***************************/
+/*
+ function recordAudio2() {
 
+ if (recStatus == 0)
+ {
+ // Inicia la grabación del  Audio
+ iniRecordAudio();
+ }
+ else
+ {
+ // para la grabación del audio
+ stopRecordAudio();
+ }
+ }
 
+ function iniRecordAudio() {
 
+ //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+ meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
 
+ // Record audio
+ meFileRecord.startRecord();
+ recStatus = 1;
+ // Stop recording after 10 sec
+ var recTime = 0;
+ //var recInterval = setInterval(
+ recInterval = setInterval(
+ function() {
+ recTime = recTime + 1;
+ //recordAudioImg
+ setAudioPosition("Recording audio..." + recTime + " sec");
+ if (recTime >= setInt) {
+ setAudioPosition("Record Audio --> OK");
+ clearInterval(recInterval);
+ meFileRecord.stopRecord();
+ document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
+ }
+ else
+ {
+ var iin = recTime % 2;
+ if (iin == 0) {
+ document.getElementById('recordAudioImg').src="img/red_stop_playback.png";
+ }
+ else{
+ document.getElementById('recordAudioImg').src="img/red_stop_playback_2.png";
+ }
+ }
+ }
+ , setInt * 100);
 
+ }
 
-/*************************** PHOTO - INI ***************************/
-/*************************** PHOTO - INI ***************************/
-/*************************** PHOTO - INI ***************************/
+ function stopRecordAudio() {
 
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
+ recStatus = 0;
+ clearInterval(recInterval);
+ meFileRecord.stopRecord();
+ document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
+ setAudioPosition("STOP Recording audio");
 
-// Wait for device API libraries to load
-//
-document.addEventListener("deviceready",onDeviceReady,false);
+ }
+ */
+/*************************** RECORD AUDIO - END ***************************/
 
-// device APIs are available
-//
-function onDeviceReady() {
-    pictureSource=navigator.camera.PictureSourceType;
-    destinationType=navigator.camera.DestinationType;
-}
-
-// Called when a photo is successfully retrieved
-//
-function onPhotoDataSuccess(imageData) {
-    // Uncomment to view the base64-encoded image data
-    // console.log(imageData);
-
-    // Get image handle
-    //
-    var smallImage = document.getElementById('smallImage');
-
-    // Unhide image elements
-    //
-    smallImage.style.display = 'block';
-
-    // Show the captured photo
-    // The in-line CSS rules are used to resize the image
-    //
-    smallImage.src = "data:image/jpeg;base64," + imageData;
-}
-
-// Called when a photo is successfully retrieved
-//
-function onPhotoURISuccess(imageURI) {
-    // Uncomment to view the image file URI
-    // console.log(imageURI);
-
-    // Get image handle
-    //
-    var largeImage = document.getElementById('largeImage');
-
-    // Unhide image elements
-    //
-    largeImage.style.display = 'block';
-
-    // Show the captured photo
-    // The in-line CSS rules are used to resize the image
-    //
-    largeImage.src = imageURI;
-}
-
-// A button will call this function
-//
-function capturePhoto() {
-    // Take picture using device camera and retrieve image as base64-encoded string
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
-}
-
-// A button will call this function
-//
-function capturePhotoEdit() {
-    // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-}
-
-// A button will call this function
-//
-function getPhoto(source) {
-    // Retrieve image file location from specified source
-    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-}
-
-// Called if something bad happens.
-//
-function onFail(message) {
-    alert('Failed because: ' + message);
-}
-
-/*************************** PHOTO - END ***************************/
-/*************************** PHOTO - END ***************************/
-/*************************** PHOTO - END ***************************/
