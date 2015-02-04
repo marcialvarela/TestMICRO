@@ -8,8 +8,18 @@ var path = '';
 /**************************************** GLOBAL VARIABLE ****************************************/
 var startTime, endTime;
 var flag = false;
-var timeToRec = 5;
+var timeToRec = 10;
 /**************************************** GLOBAL VARIABLE ****************************************/
+// Audio player
+//
+var my_media = null;
+var mediaTimer = null;
+var myFileName = "myfile001.wav";
+var meFileRecord = null;
+var recInterval = null;
+var setInt = 10;
+var recStatus = 0;
+var playStatus = 0;
 
 
 
@@ -18,7 +28,7 @@ var timeToRec = 5;
 /**************************************** WINDOW EVENTS ****************************************/
 
 window.addEventListener('load', function () {
-    document.getElementById('playAudioPush').style.visibility="hidden";
+    document.getElementById('playAudio_Push').style.visibility="hidden";
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
 
@@ -73,13 +83,12 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
 };
 
 /* ------------- TOUCH START -------------*/
-document.getElementById('recordAudioPush').addEventListener('touchstart',function(event) {
+document.getElementById('recordAudio_Push').addEventListener('touchstart',function(event) {
     startTime = new Date().getTime();
     flag = false;
 
-
     document.getElementById('divlegend').style.visibility="visible";
-    document.getElementById('recordAudioPush').src="img/micro_push_rec.png.png";
+    document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
 
     recStatus=0;
     recordAudioPush();
@@ -87,22 +96,48 @@ document.getElementById('recordAudioPush').addEventListener('touchstart',functio
 },false);
 
 /* ------------- TOUCH MOVE -------------*/
-document.getElementById('recordAudioPush').addEventListener('touchmove',function(event) {
-    document.getElementById('divlegend').style.visibility="hidden";
+document.getElementById('recordAudio_Push').addEventListener('touchmove',function(event) {
+    alert('touchmove');
     flag = true;
+    document.getElementById('divlegend').style.visibility="hidden";
 },false);
 
 /* ------------- TOUCH END -------------*/
-document.getElementById('recordAudioPush').addEventListener('touchend',function(event) {
+document.getElementById('recordAudio_Push').addEventListener('touchend',function(event) {
+    alert('touchend');
+    alert(flag);
     endTime = new Date().getTime();
-    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 5 sec= 5000 msec
+    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 10 sec= 10000 msec
     {
-        document.getElementById('playAudioPush').style.visibility="visible";
+        document.getElementById('playAudio_Push').style.visibility="visible";
         playStatus=0;
     }
     else {
-        recStatus = 1;  //STOP Record
-        recordAudioPush();
+        if (!flag) {
+            recStatus = 1;  //STOP Record
+            document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
+            recordAudioPush();
+
+            document.getElementById('playAudio_Push').style.visibility="visible";
+            playStatus=0;
+
+        }
+        else if (flag) {
+            // Se ha cancelado la grabación y se vuelve a mostrar el botón de REC
+            myFileName = null;  // Eliminamos la grabación
+            document.getElementById('playAudio_Push').style.visibility="hidden";
+            playStatus=0;
+            document.getElementById('recordAudio_Push').src="img/micro_push.png";
+        }
+        else{
+            // se ha hecho la grabación correcta y se prepara el boton de PLAY y el de REC
+            document.getElementById('playAudio_Push').style.visibility="visible";
+            playStatus=0;
+
+            document.getElementById('recordAudio_Push').src="img/micro_push.png";
+            recStatus = 0;
+        }
+
     }
     startTime = null;
     endTime = null;
@@ -120,16 +155,6 @@ document.getElementById('recordAudioPush').addEventListener('touchend',function(
 
 
 /*************************** PLAY AUDIO PUSH - INI ***************************/
-// Audio player
-//
-var my_media = null;
-var mediaTimer = null;
-var myFileName = "myfile001.wav";
-var meFileRecord = null;
-var recInterval = null;
-var setInt = 10;
-var recStatus = 0;
-var playStatus = 0;
 
 function gotFS(fileSystem) {
     fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry, onError);
@@ -154,7 +179,7 @@ function gotFileEntry(fileEntry) {
                 function(position) {
                     if (position > -1) {
                         setAudioPlayPosition("Play... " + (position) + " sec");
-                        document.getElementById('playAudioPush').src="img/stop_red.png";
+                        document.getElementById('playAudio_Push').src="img/stop_red.png";
                     }
                 },
                 // error callback
@@ -175,28 +200,12 @@ function iniPlayAudio(){
 function stopAudio() {
     clearInterval(recInterval);
     my_media.stop();
-    document.getElementById('playAudioPush').src="img/black_play.png";
+    document.getElementById('playAudio_Push').src="img/black_play.png";
     setAudioPlayPosition("STOP Audio");
 }
-
-function playAudio2(){
-
-    if (playStatus == 0)
-    {
-        // Inicia el play del Audio
-        playStatus = 1;
-        document.getElementById('playAudioPush').src="img/black_stop_play_back.png";
-        iniPlayAudio();
-    }
-    else if (playStatus == 1)
-    {
-        // para el play del audio
-        playStatus = 0;
-        document.getElementById('playAudioPush').src="img/black_play.png";
-        stopAudio();
-    }
-}
 /*************************** PLAY AUDIO PUSH - END ***************************/
+/*****************************************************************************/
+
 
 
 function recordAudioPush() {
@@ -228,16 +237,16 @@ function iniRecordAudioPush() {
                 setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
-                document.getElementById('recordAudioPush').src="img/micro_push.png";
+                document.getElementById('recordAudio_Push').src="img/micro_push.png";
             }
             else
             {
                 var iin = recTime % 2;
                 if (iin == 0) {
-                    document.getElementById('recordAudioPush').src="img/micro_push_rec.png";
+                    document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
                 }
                 else{
-                    document.getElementById('recordAudioPush').src="img/micro_push_rec_2.png";
+                    document.getElementById('recordAudio_Push').src="img/micro_push_rec_2.png";
                 }
             }
         }
@@ -250,10 +259,10 @@ function stopRecordAudioPull(){
     recStatus = 0;
     clearInterval(recInterval);
     meFileRecord.stopRecord();
-    document.getElementById('recordAudioPush').src="img/micro_push.png";
+    document.getElementById('recordAudio_Push').src="img/micro_push.png";
 
     playStatus=0;
-    document.getElementById('playAudioPush').style.visibility="visible";
+    document.getElementById('playAudio_Push').style.visibility="visible";
     setAudioPosition("STOP Recording audio");
 }
 
@@ -264,14 +273,14 @@ function playAudioPush(){
     {
         // Inicia el play del Audio
         playStatus = 1;
-        document.getElementById('playAudioPush').src="img/stop_red.png";
+        document.getElementById('playAudio_Push').src="img/stop_red.png";
         iniPlayAudio();
     }
     else if (playStatus == 1)
     {
         // para el play del audio
         playStatus = 0;
-        document.getElementById('playAudioPush').src="img/play_red.png";
+        document.getElementById('playAudio_Push').src="img/play_red.png";
         stopAudio();
     }
 
