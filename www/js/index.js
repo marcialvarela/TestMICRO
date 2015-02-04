@@ -100,10 +100,16 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
 
 /* ------------- TOUCH MOVE -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchmove',function(event) {
-    alert('Se ha cancelado la grabación');
 
+    //Limpiamos etiquetas de segundos
     setAudioPlayPosition("");
     setAudioPosition("");
+
+    //Provocamos parar la grabación
+    clearInterval(recInterval);
+    meFileRecord.stopRecord();
+    alert('stopRecord 3');
+    recStatus = 0;
 
     //Ocultamos leyenda de Cancelar
     document.getElementById('divlegend').style.visibility="hidden";
@@ -120,23 +126,31 @@ document.getElementById('recordAudio_Push').addEventListener('touchmove',functio
 
     flag = true;
 
+    alert('Se ha cancelado la grabación');
+
 },false);
 
 /* ------------- TOUCH END -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchend',function(event) {
 
     alert('touchend');
+
+    //Provocamos parar la grabación
+    clearInterval(recInterval);
+    meFileRecord.stopRecord();
+    alert('stopRecord 2');
+    recStatus = 0;
+
+
     endTime = new Date().getTime();
 
+    //Limpiamos etiquetas de segundos
+    setAudioPlayPosition("");
+    setAudioPosition("");
+
     if(!flag) {
-        // Se ha levantado el dedo correctamente
-        //1. Si no se ha superado el tiempo de grabación (timeToTouch en segundos) --> Se para la grabación
-        if((endTime-startTime) < timeToTouch * 1000) {
-            alert('Parar grabación');
-            recStatus = 1;  //STOP Record
-            recordAudioPush();
-            document.getElementById('recordAudio_Push').src="img/micro_push.png";
-        }
+        // ha ido bien
+
         //Ocultamos leyenda de Cancelar
         document.getElementById('divlegend').style.visibility="hidden";
 
@@ -152,7 +166,22 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
         playStatus=0;
     }
     else{
-        alert(flag);
+        //No ha ido bien
+
+        //Ocultamos leyenda de Cancelar
+        document.getElementById('divlegend').style.visibility="hidden";
+
+        // Ocultamos el icono de grabacion que parpadea
+        document.getElementById('recImg').style.visibility="visible";
+
+        // Ponemos el botón de Graba en inicio (en negro)
+        document.getElementById('recordAudio_Push').src="img/micro_push.png";
+
+        // Mostramos el boton de PLAY
+        document.getElementById('playAudio_Push').style.visibility="hidden";
+        document.getElementById('playAudio_Push').src="img/play_red.png";
+        playStatus=0;
+
     }
 
     startTime = null;
@@ -267,6 +296,7 @@ function iniRecordAudioPush() {
             if (recTime >= timeToRec) {
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
+                alert('stopRecord 1');
                 recStatus = 0;
             }
             else
