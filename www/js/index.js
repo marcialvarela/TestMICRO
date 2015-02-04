@@ -19,6 +19,16 @@ function onDeviceReady() {
         //know that PhoneGap is initialized
         pgr = true;
 
+        document.getElementById('recordAudioPush').addEventListener('touchstart', function (e) {
+            // do something
+            alert('touchstart');
+        }, false);
+
+        document.getElementById('recordAudioPush').addEventListener('touchend', function (e) {
+            // do something
+            alert('touchend');
+        }, false);
+
         // window.requestFileSystem is recognized, so far so good.
         window.requestFileSystem(1, 0, function(fileSystem){
             alert('success');
@@ -113,9 +123,6 @@ function gotFileEntry(fileEntry) {
     }
 }
 
-// Play audio
-//
-
 function iniPlayAudio(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onError);
     //var myFilePath = fileSystem.root.getFile(myFileName, {create: true, exclusive: false}, gotFileEntry2(myFileName), onError);
@@ -150,6 +157,26 @@ function playAudio2(){
 
 
 
+function recordAudioPush() {
+    if (recStatus == 0){
+        // Inicia la grabación del  Audio
+        iniRecordAudioPush();
+    }
+    else{
+        // para la grabación del audio
+        stopRecordAudioPull();
+    }
+}
+
+function iniRecordAudioPush() {
+
+    //window.Touch()
+
+}
+
+function stopRecordAudioPull(){
+
+}
 
 
 /*************************** RECORD AUDIO - INI ***************************/
@@ -166,7 +193,6 @@ function recordAudio2() {
         stopRecordAudio();
     }
 }
-/*************************** RECORD AUDIO - END ***************************/
 
 function iniRecordAudio() {
 
@@ -214,6 +240,7 @@ function stopRecordAudio() {
     setAudioPosition("STOP Recording audio");
 
 }
+/*************************** RECORD AUDIO - END ***************************/
 
 
 
@@ -254,11 +281,9 @@ function exitApp() {
 
     /* MIRAR SI FUNCIONA  */
     clearInterval(recInterval);
-    alert(recStatus);
     if (recStatus == 1){
         meFileRecord.stopRecord();
     }
-    alert(playStatus);
     if (playStatus == 1){
         my_media.stop();
     }
