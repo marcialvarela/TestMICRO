@@ -8,6 +8,7 @@ var path = '';
 /**************************************** GLOBAL VARIABLE ****************************************/
 var startTime, endTime;
 var flag = false;
+var timeToTouch = 12;
 var timeToRec = 10;
 /**************************************** GLOBAL VARIABLE ****************************************/
 // Audio player
@@ -101,6 +102,9 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
 document.getElementById('recordAudio_Push').addEventListener('touchmove',function(event) {
     alert('Se ha cancelado la grabación');
 
+    setAudioPlayPosition("");
+    setAudioPosition("");
+
     //Ocultamos leyenda de Cancelar
     document.getElementById('divlegend').style.visibility="hidden";
 
@@ -126,8 +130,8 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
 
     if(!flag) {
         // Se ha levantado el dedo correctamente
-        //1. Si no se ha superado el tiempo de grabación (timeToRec en segundos) --> Se para la grabación
-        if((endTime-startTime) < timeToRec * 1000) {
+        //1. Si no se ha superado el tiempo de grabación (timeToTouch en segundos) --> Se para la grabación
+        if((endTime-startTime) < timeToTouch * 1000) {
             alert('Parar grabación');
             recStatus = 1;  //STOP Record
             recordAudioPush();
@@ -144,6 +148,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
 
         // Mostramos el boton de PLAY
         document.getElementById('playAudio_Push').style.visibility="visible";
+        document.getElementById('playAudio_Push').src="img/play_red.png";
         playStatus=0;
     }
     else{
@@ -190,7 +195,14 @@ function gotFileEntry(fileEntry) {
                 // success callback
                 function(position) {
                     if (position > -1) {
-                        setAudioPlayPosition("Play... " + (position) + " sec");
+                        var iPos = parseInt(position);
+                        if (iPos < 10) {
+                            setAudioPlayPosition("Play... 0:0" + (iPos) + " sec");
+                        }
+                        else
+                        {
+                            setAudioPlayPosition("Play... 0:" + (iPos) + " sec");
+                        }
                         document.getElementById('playAudio_Push').src="img/stop_red.png";
                     }
                 },
@@ -253,10 +265,9 @@ function iniRecordAudioPush() {
             }
 
             if (recTime >= timeToRec) {
-                //setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
-                //document.getElementById('recordAudio_Push').src="img/micro_push.png";
+                recStatus = 0;
             }
             else
             {
