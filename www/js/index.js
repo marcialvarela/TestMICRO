@@ -262,8 +262,7 @@ function iniPlayAudio(){
 function stopAudio() {
     clearInterval(recInterval);
     my_media.stop();
-    document.getElementById('playAudio_Push').src="img/black_play.png";
-    setAudioPlayPosition("STOP Audio");
+    document.getElementById('playAudio_Push').src="img/play_red.png";
 }
 /*************************** PLAY AUDIO PUSH - END ***************************/
 /*****************************************************************************/
@@ -428,8 +427,10 @@ function onSuccess(action) {
 // onError Callback
 //
 function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
+    if (error >0){
+        alert('code: '    + error.code    + '\n' +
+        'message: ' + error.message + '\n');
+    }
 }
 /*************************** LABEL SUCCESS/ERROR - END ***************************/
 
