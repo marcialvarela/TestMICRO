@@ -133,12 +133,9 @@ document.getElementById('recordAudio_Push').addEventListener('touchmove',functio
 /* ------------- TOUCH END -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchend',function(event) {
 
-    alert('touchend');
-
     //Provocamos parar la grabación
     clearInterval(recInterval);
     meFileRecord.stopRecord();
-    alert('stopRecord 2');
     recStatus = 0;
 
 
@@ -228,11 +225,11 @@ function gotFileEntry(fileEntry) {
                     if (position > -1) {
                         var iPos = parseInt(position);
                         if (iPos < 10) {
-                            setAudioPlayPosition("Play 0:0" + (iPos) + " sec");
+                            setAudioPlayPosition("Play 0:0" + (iPos));
                         }
                         else
                         {
-                            setAudioPlayPosition("Play 0:" + (iPos) + " sec");
+                            setAudioPlayPosition("Play 0:" + (iPos));
                         }
                         if (iPos==0){
                             setAudioPlayPosition("");
@@ -292,45 +289,6 @@ function iniRecordAudioPush() {
     // Record audio
     meFileRecord.startRecord();
     recStatus = 1;
-    // Stop recording after 10 sec
-    var recTime = 0;
-    //var recInterval = setInterval(
-    recInterval = setInterval(
-        function() {
-            recTime = recTime + 1;
-            //recordAudioImg
-            //setAudioPosition("Recording audio..." + recTime + " sec");
-            if (recTime<10) {
-                setAudioPosition("0:0" + recTime + " sec");
-            }
-            else{
-                setAudioPosition("0:" + recTime + " sec");
-            }
-
-            if (recTime >= timeToRec) {
-
-                var msg="Ha sobrepasado el tiempo de grabación. ¿Quiere guardar la grabcación?";
-                navigator.notification.confirm(msg, onConfirm, 'Tiempo de grabación', ['Si','No'])
-
-                clearInterval(recInterval);
-                meFileRecord.stopRecord();
-                alert('stopRecord 1');
-                recStatus = 0;
-            }
-            else
-            {
-                document.getElementById('recImg').style.visibility="visible";
-                var iin = recTime % 2;
-                if (iin == 0) {
-                    document.getElementById('recImg').src="img/micro_push_rec.png";
-                }
-                else{
-                    document.getElementById('recImg').src="img/micro_push_rec_2.png";
-                }
-            }
-        }
-        , timeToRec * 1000);
-
 }
 
 function iniRecordAudioPush_OLD() {
