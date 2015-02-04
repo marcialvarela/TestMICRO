@@ -97,26 +97,53 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
 
 /* ------------- TOUCH MOVE -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchmove',function(event) {
-    alert('touchmove');
-    flag = true;
+    alert('Se ha cancelado la grabación');
     document.getElementById('divlegend').style.visibility="hidden";
+    flag = true;
 },false);
 
 /* ------------- TOUCH END -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchend',function(event) {
+
     alert('touchend');
-    alert(flag);
+
+    // Ocultamos leyenda de Deslizar para cancelar
+    document.getElementById('divlegend').style.visibility="hidden";
+
+    // Ponemos el botón de Graba en inicio (en negro)
+    document.getElementById('recordAudio_Push').src="img/micro_push.png";
+
+
+    // Ponemos visible el boton de PLAY
+    document.getElementById('playAudio_Push').style.visibility="visible";
+    playStatus=0;
+
+
     endTime = new Date().getTime();
-    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 10 sec= 10000 msec
+
+    //Mirar si NO se ha pasado del tiempo de la grabación para pararla
+    if(!flag && ((endTime-startTime) < timeToRec * 1000)) {
+        recStatus = 1;  //STOP Record
+        recordAudioPush();
+        document.getElementById('recordAudio_Push').src="img/micro_push.png";
+    }
+    else if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 10 sec= 10000 msec
     {
+        // Se ha grabado en el total del tiempo y correcto
+
+        // Ocultamos leyenda de Deslizar para cancelar
+        document.getElementById('divlegend').style.visibility="hidden";
+        // Ponemos el botón de Graba en inicio (en negro)
+        document.getElementById('recordAudio_Push').src="img/micro_push.png";
+        // Ponemos visible el boton de PLAY
         document.getElementById('playAudio_Push').style.visibility="visible";
         playStatus=0;
     }
     else {
         if (!flag) {
             recStatus = 1;  //STOP Record
-            document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
             recordAudioPush();
+            document.getElementById('recordAudio_Push').src="img/micro_push.png";
 
             document.getElementById('playAudio_Push').style.visibility="visible";
             playStatus=0;
@@ -124,7 +151,6 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
         }
         else if (flag) {
             // Se ha cancelado la grabación y se vuelve a mostrar el botón de REC
-            myFileName = null;  // Eliminamos la grabación
             document.getElementById('playAudio_Push').style.visibility="hidden";
             playStatus=0;
             document.getElementById('recordAudio_Push').src="img/micro_push.png";
