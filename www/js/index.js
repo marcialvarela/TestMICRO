@@ -19,15 +19,8 @@ function onDeviceReady() {
         //know that PhoneGap is initialized
         pgr = true;
 
-        document.getElementById('recordAudioPush').addEventListener('touchstart', function (e) {
-            // do something
-            alert('touchstart');
-        }, false);
-
-        document.getElementById('recordAudioPush').addEventListener('touchend', function (e) {
-            // do something
-            alert('touchend');
-        }, false);
+        document.getElementById('recordAudioPush').addEventListener("touchstart",onPushReady,false);
+        document.getElementById('recordAudioPush').addEventListener("touchend",onPullReady,false);
 
         // window.requestFileSystem is recognized, so far so good.
         window.requestFileSystem(1, 0, function(fileSystem){
@@ -155,6 +148,13 @@ function playAudio2(){
 }
 /*************************** PLAY AUDIO - END ***************************/
 
+function onPushReady() {
+    alert('onPushReady');
+}
+
+function onPullReady() {
+    alert('onPullReady');
+}
 
 
 function recordAudioPush() {
