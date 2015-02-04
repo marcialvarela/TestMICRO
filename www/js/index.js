@@ -34,7 +34,6 @@ function onDeviceReady() {
 
         // window.requestFileSystem is recognized, so far so good.
         window.requestFileSystem(1, 0, function(fileSystem){
-            alert('success');
         }, function(e){
             // 'e' is an object, {code: 'Class not found'}
             alert('Error accessing local file system');
@@ -155,7 +154,7 @@ function gotFileEntry(fileEntry) {
                 function(position) {
                     if (position > -1) {
                         setAudioPlayPosition("Play... " + (position) + " sec");
-                        document.getElementById('playAudioImg').src="img/black_stop_play_back.png";
+                        document.getElementById('playAudioPush').src="img/stop_red.png";
                     }
                 },
                 // error callback
@@ -198,6 +197,7 @@ function playAudio2(){
     }
 }
 /*************************** PLAY AUDIO PUSH - END ***************************/
+
 
 function recordAudioPush() {
     if (recStatus == 0){
