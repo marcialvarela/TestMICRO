@@ -4,11 +4,42 @@ var lc;
 var pgr = false;
 var path = '';
 
-//var capture = navigator.device.capture;
 
 window.addEventListener('load', function () {
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
+
+var startTime, endTime,password;
+var flag = false;
+
+window.addEventListener('touchstart',function(event) {
+    startTime = new Date().getTime();
+    flag = false;
+},false);
+
+window.addEventListener('touchmove',function(event) {
+    flag = true;
+},false);
+
+window.addEventListener('touchend',function(event) {
+    endTime = new Date().getTime();
+    if(!flag && ((endTime-startTime) > 5000))   //logout after more then 5 sec= 5000 msec
+    {
+        password = prompt("Please enter the exit password");
+        if (password == "123")
+        {
+            alert("Goodbay!");
+            flag = true;
+            navigator.app.exitApp();
+        }
+        else
+        {
+            alert("Wrong password!!!");
+            location = "Main_page.html";
+        }
+    }
+},false);
+
 
 function onDeviceReady() {
     try {
