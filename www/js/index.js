@@ -9,18 +9,16 @@ window.addEventListener('load', function () {
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
 
+/*
 var startTime, endTime,password;
 var flag = false;
-
 window.addEventListener('touchstart',function(event) {
     startTime = new Date().getTime();
     flag = false;
 },false);
-
 window.addEventListener('touchmove',function(event) {
     flag = true;
 },false);
-
 window.addEventListener('touchend',function(event) {
     endTime = new Date().getTime();
     if(!flag && ((endTime-startTime) > 5000))   //logout after more then 5 sec= 5000 msec
@@ -37,6 +35,54 @@ window.addEventListener('touchend',function(event) {
             alert("Wrong password!!!");
             location = "Main_page.html";
         }
+    }
+},false);
+*/
+
+var startTime, endTime,password;
+var flag = false;
+var timeToRec = 5;
+
+window.addEventListener('touchstart',function(event) {
+    startTime = new Date().getTime();
+    flag = false;
+
+    //empezar a grabar
+    document.getElementById('recordAudioPush').src="img/micro_push_rec.png.png";
+
+    recStatus=0;
+    recordAudioPush();
+
+},false);
+
+window.addEventListener('touchmove',function(event) {
+    flag = true;
+},false);
+
+window.addEventListener('touchend',function(event) {
+    endTime = new Date().getTime();
+    if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 5 sec= 5000 msec
+    {
+        playStatus=0;
+        playAudio2();
+
+/*        password = prompt("Please enter the exit password");
+        if (password == "123")
+        {
+            alert("Goodbay!");
+            flag = true;
+            navigator.app.exitApp();
+        }
+        else
+        {
+            alert("Wrong password!!!");
+            location = "Main_page.html";
+        }
+*/
+    }
+    else {
+        recStatus = 1;
+        recordAudioPush();
     }
 },false);
 
@@ -201,11 +247,48 @@ function recordAudioPush() {
 
 function iniRecordAudioPush() {
 
-    //window.Touch()
+    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+
+    // Record audio
+    meFileRecord.startRecord();
+    recStatus = 1;
+    // Stop recording after 10 sec
+    var recTime = 0;
+    //var recInterval = setInterval(
+    recInterval = setInterval(
+        function() {
+            recTime = recTime + 1;
+            //recordAudioImg
+            setAudioPosition("Recording audio..." + recTime + " sec");
+            if (recTime >= timeToRec) {
+                setAudioPosition("Record Audio --> OK");
+                clearInterval(recInterval);
+                meFileRecord.stopRecord();
+                document.getElementById('recordAudioImg').src="img/micro_push.png";
+            }
+            else
+            {
+                var iin = recTime % 2;
+                if (iin == 0) {
+                    document.getElementById('recordAudioPush').src="img/micro_push_rec.png";
+                }
+                else{
+                    document.getElementById('recordAudioImg').src="img/micro_push_rec_2.png";
+                }
+            }
+        }
+        , timeToRec * 100);
 
 }
 
 function stopRecordAudioPull(){
+
+    recStatus = 0;
+    clearInterval(recInterval);
+    meFileRecord.stopRecord();
+    document.getElementById('recordAudioPush').src="img/micro_push.png";
+    setAudioPosition("STOP Recording audio");
 
 }
 
