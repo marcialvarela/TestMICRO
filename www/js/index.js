@@ -29,6 +29,7 @@ var playStatus = 0;
 
 window.addEventListener('load', function () {
     document.getElementById('playAudio_Push').style.visibility="hidden";
+    document.getElementById('recImg').style.visibility="hidden";
     document.addEventListener("deviceReady", onDeviceReady, false);
 }, false);
 
@@ -88,6 +89,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
     flag = false;
 
     document.getElementById('divlegend').style.visibility="visible";
+    document.getElementById('recImg').style.visibility="visible";
     document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
 
     recStatus=0;
@@ -98,76 +100,60 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
 /* ------------- TOUCH MOVE -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchmove',function(event) {
     alert('Se ha cancelado la grabación');
+
+    //Ocultamos leyenda de Cancelar
     document.getElementById('divlegend').style.visibility="hidden";
+
+    // Ocultamos el icono de grabacion que parpadea
+    document.getElementById('recImg').style.visibility="hidden";
+
+    // Ponemos el botón de Graba en inicio (en negro)
+    document.getElementById('recordAudio_Push').src="img/micro_push.png";
+
+    // Ocultamos el boton de PLAY
+    document.getElementById('playAudio_Push').style.visibility="hidden";
+    playStatus=0;
+
     flag = true;
+
 },false);
 
 /* ------------- TOUCH END -------------*/
 document.getElementById('recordAudio_Push').addEventListener('touchend',function(event) {
 
     alert('touchend');
-
-    // Ocultamos leyenda de Deslizar para cancelar
-    document.getElementById('divlegend').style.visibility="hidden";
-
-    // Ponemos el botón de Graba en inicio (en negro)
-    document.getElementById('recordAudio_Push').src="img/micro_push.png";
-
-
-    // Ponemos visible el boton de PLAY
-    document.getElementById('playAudio_Push').style.visibility="visible";
-    playStatus=0;
-
-
     endTime = new Date().getTime();
 
-    //Mirar si NO se ha pasado del tiempo de la grabación para pararla
-    if(!flag && ((endTime-startTime) < timeToRec * 1000)) {
-        recStatus = 1;  //STOP Record
-        recordAudioPush();
-        document.getElementById('recordAudio_Push').src="img/micro_push.png";
-    }
-    else if(!flag && ((endTime-startTime) > timeToRec * 1000))   //logout after more then 10 sec= 10000 msec
-    {
-        // Se ha grabado en el total del tiempo y correcto
-
-        // Ocultamos leyenda de Deslizar para cancelar
-        document.getElementById('divlegend').style.visibility="hidden";
-        // Ponemos el botón de Graba en inicio (en negro)
-        document.getElementById('recordAudio_Push').src="img/micro_push.png";
-        // Ponemos visible el boton de PLAY
-        document.getElementById('playAudio_Push').style.visibility="visible";
-        playStatus=0;
-    }
-    else {
-        if (!flag) {
+    if(!flag) {
+        // Se ha levantado el dedo correctamente
+        //1. Si no se ha superado el tiempo de grabación (timeToRec en segundos) --> Se para la grabación
+        if((endTime-startTime) < timeToRec * 1000) {
+            alert('Parar grabación');
             recStatus = 1;  //STOP Record
             recordAudioPush();
             document.getElementById('recordAudio_Push').src="img/micro_push.png";
-
-            document.getElementById('playAudio_Push').style.visibility="visible";
-            playStatus=0;
-
         }
-        else if (flag) {
-            // Se ha cancelado la grabación y se vuelve a mostrar el botón de REC
-            document.getElementById('playAudio_Push').style.visibility="hidden";
-            playStatus=0;
-            document.getElementById('recordAudio_Push').src="img/micro_push.png";
-        }
-        else{
-            // se ha hecho la grabación correcta y se prepara el boton de PLAY y el de REC
-            document.getElementById('playAudio_Push').style.visibility="visible";
-            playStatus=0;
+        //Ocultamos leyenda de Cancelar
+        document.getElementById('divlegend').style.visibility="hidden";
 
-            document.getElementById('recordAudio_Push').src="img/micro_push.png";
-            recStatus = 0;
-        }
+        // Ocultamos el icono de grabacion que parpadea
+        document.getElementById('recImg').style.visibility="hidden";
 
+        // Ponemos el botón de Graba en inicio (en negro)
+        document.getElementById('recordAudio_Push').src="img/micro_push.png";
+
+        // Mostramos el boton de PLAY
+        document.getElementById('playAudio_Push').style.visibility="visible";
+        playStatus=0;
     }
+    else{
+        alert(flag);
+    }
+
     startTime = null;
     endTime = null;
     flag = false;
+
 },false);
 
 /**************************************** WINDOW EVENTS ****************************************/
@@ -258,21 +244,29 @@ function iniRecordAudioPush() {
         function() {
             recTime = recTime + 1;
             //recordAudioImg
-            setAudioPosition("Recording audio..." + recTime + " sec");
+            //setAudioPosition("Recording audio..." + recTime + " sec");
+            if (recTime<10) {
+                setAudioPosition("0:0" + recTime + " sec");
+            }
+            else{
+                setAudioPosition("0:" + recTime + " sec");
+            }
+
             if (recTime >= timeToRec) {
-                setAudioPosition("Record Audio --> OK");
+                //setAudioPosition("Record Audio --> OK");
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
-                document.getElementById('recordAudio_Push').src="img/micro_push.png";
+                //document.getElementById('recordAudio_Push').src="img/micro_push.png";
             }
             else
             {
+                document.getElementById('recImg').style.visibility="visible";
                 var iin = recTime % 2;
                 if (iin == 0) {
-                    document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
+                    document.getElementById('recImg').src="img/micro_push_rec.png";
                 }
                 else{
-                    document.getElementById('recordAudio_Push').src="img/micro_push_rec_2.png";
+                    document.getElementById('recImg').src="img/micro_push_rec_2.png";
                 }
             }
         }
