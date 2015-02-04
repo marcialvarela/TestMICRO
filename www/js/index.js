@@ -8,7 +8,7 @@ var path = '';
 /**************************************** GLOBAL VARIABLE ****************************************/
 var startTime, endTime;
 var flag = false;
-var timeToTouch = 12;
+var timeToTouch = 10;
 var timeToRec = 10;
 /**************************************** GLOBAL VARIABLE ****************************************/
 // Audio player
@@ -109,7 +109,6 @@ document.getElementById('recordAudio_Push').addEventListener('touchmove',functio
     meFileRecord = null
     clearInterval(recInterval);
     //meFileRecord.stopRecord();
-    alert('stopRecord 3');
     recStatus = 0;
 
     //Ocultamos leyenda de Cancelar
@@ -236,6 +235,8 @@ function gotFileEntry(fileEntry) {
                             setAudioPlayPosition("Play 0:" + (iPos) + " sec");
                         }
                         if (iPos==0){
+                            setAudioPlayPosition("");
+                            setAudioPosition("");
                             document.getElementById('playAudio_Push').src="img/play_red.png";
                         }
                         else{
@@ -246,7 +247,7 @@ function gotFileEntry(fileEntry) {
                 // error callback
                 function(e) {
                     console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
+                    setAudioPlayPosition("Error: " + e);
                 }
             );
         }, setInt * 100);
@@ -278,6 +279,12 @@ function recordAudioPush() {
     }
 }
 
+function onConfirm(buttonIndex) {
+    alert('You selected button ' + buttonIndex);
+    alert(buttonIndex(0));
+    alert(buttonIndex[0]);
+}
+
 function iniRecordAudioPush() {
 
     //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
@@ -302,6 +309,59 @@ function iniRecordAudioPush() {
             }
 
             if (recTime >= timeToRec) {
+
+                var msg="Ha sobrepasado el tiempo de grabación. ¿Quiere guardar la grabcación?";
+                navigator.notification.confirm(msg, onConfirm, 'Tiempo de grabación', ['Si','No'])
+
+                clearInterval(recInterval);
+                meFileRecord.stopRecord();
+                alert('stopRecord 1');
+                recStatus = 0;
+            }
+            else
+            {
+                document.getElementById('recImg').style.visibility="visible";
+                var iin = recTime % 2;
+                if (iin == 0) {
+                    document.getElementById('recImg').src="img/micro_push_rec.png";
+                }
+                else{
+                    document.getElementById('recImg').src="img/micro_push_rec_2.png";
+                }
+            }
+        }
+        , timeToRec * 1000);
+
+}
+
+function iniRecordAudioPush_OLD() {
+
+    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
+
+    // Record audio
+    meFileRecord.startRecord();
+    recStatus = 1;
+    // Stop recording after 10 sec
+    var recTime = 0;
+    //var recInterval = setInterval(
+    recInterval = setInterval(
+        function() {
+            recTime = recTime + 1;
+            //recordAudioImg
+            //setAudioPosition("Recording audio..." + recTime + " sec");
+            if (recTime<10) {
+                setAudioPosition("0:0" + recTime + " sec");
+            }
+            else{
+                setAudioPosition("0:" + recTime + " sec");
+            }
+
+            if (recTime >= timeToRec) {
+
+                var msg="Ha sobrepasado el tiempo de grabación. ¿Quiere guardar la grabcación?";
+                navigator.notification.confirm(msg, onConfirm, 'Tiempo de grabación', ['Si','No'])
+
                 clearInterval(recInterval);
                 meFileRecord.stopRecord();
                 alert('stopRecord 1');
