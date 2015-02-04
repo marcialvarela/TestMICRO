@@ -251,6 +251,17 @@ function setAudioPlayPosition(position) {
 
 /*************************** EXIT APP - INI ***************************/
 function exitApp() {
+
+    /* MIRAR SI FUNCIONA  */
+    clearInterval(recInterval);
+    alert(recStatus);
+    if (recStatus == 1){
+        meFileRecord.stopRecord();
+    }
+    alert(playStatus);
+    if (playStatus == 1){
+        my_media.stop();
+    }
     navigator.app.exitApp();
 }
 /*************************** EXIT APP - END ***************************/
