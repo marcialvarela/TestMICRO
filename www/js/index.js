@@ -92,6 +92,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchstart',functi
     document.getElementById('divlegend').style.visibility="visible";
     document.getElementById('recImg').style.visibility="visible";
     document.getElementById('recordAudio_Push').src="img/micro_push_rec.png";
+    document.getElementById('playAudio_Push').style.visibility="hidden";
 
     recStatus=0;
     recordAudioPush();
@@ -307,14 +308,12 @@ function playAudioPush(){
     {
         // Inicia el play del Audio
         playStatus = 1;
-        document.getElementById('playAudio_Push').src="img/stop.png";
         iniPlayAudio();
     }
     else if (playStatus == 1)
     {
         // para el play del audio
         playStatus = 0;
-        document.getElementById('playAudio_Push').src="img/play.png";
         stopAudio();
     }
 
