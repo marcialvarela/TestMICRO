@@ -31,6 +31,41 @@
     </head>
     <body>
         <div class="app" style="top:100px; left: 120px;" align="center">
+            <table cellpadding="0" cellspacing="0" border="1" width="520px" align="center" style="background-color: #eeeeff; height: 40px;">
+                <tr align="center">
+                    <td colspan="5" align="center">
+                        <img src="record.png" align="center" width="170px" height="170px" border="none">
+                        <br/>
+                        <label for="a1" style="font-size: medium">Record & Play Audio</label>
+                        <br/>
+                        <label for="a1" style="font-size: small">(PhoneGap platform)</label>
+                        <br/>
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40px">
+                        <img id="exitImg" src="img/exit_01.png" align="center" width="90px" height="90px" border="none" onclick="exitApp();" >
+                    </td>
+                    <td width="80px">
+                        <p id="audio_position" style="font-family: Calibri; font-size: x-large; font-weight: bold;"></p>
+                    </td>
+                    <td width="320px">
+                        <div id="divlegend" style="visibility: hidden; background-color: khaki; width: 320px; height: 30px;" >
+                            <img id="recImg" src="img/micro_push_rec.png" align="center" width="30px" height="30px" border="none" >
+                            <label id="lbllegend" style="font-size: large; font-family: Calibri;">DESLICE PARA CANCELAR</label>
+                        </div>
+                    </td>
+                    <td width="40px">
+                        <img id="playAudio_Push" src="img/play_red.png" align="center" width="30px" height="30px" border="none" onclick="playAudioPush();" >
+                    </td>
+                    <td width="40px">
+                        <img id="recordAudio_Push" src="img/micro_push.png" align="center" width="30px" height="30px" border="none" >
+                    </td>
+                </tr>
+            </table>
+
+            <br/><br/><br/><br/><br/><br/><br/>
             <table cellpadding="0" cellspacing="0" border="0" width="520px" align="center">
                 <tr align="center">
                     <td colspan="4" align="center">
@@ -47,37 +82,13 @@
                     <td colspan="4" style="height: 60px"></td>
                 </tr>
                 <tr>
-                    <!--
-                    <td colspan="2">
-                        <img id="recordAudioImg" src="img/red_stop_rec.png" align="center" width="90px" height="90px" border="none" onclick="recordAudio2();" >
-                        <img id="playAudioImg" src="img/black_play.png" align="center" width="90px" height="90px" border="none" onclick="playAudio2();" >
-                    </td>
-                    <td></td>
-                    <td>
-                        <img id="exitImg" src="img/exit_01.png" align="center" width="90px" height="90px" border="none" onclick="exitApp();" >
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="height: 50px"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <p id="audio_positionRecord"></p>
-                    </td>
-                    <td colspan="2">
-                        <p id="audio_positionPlay"></p>
-                    </td>
-                </tr>
-                -->
                 <tr>
                     <td colspan="4" style="height: 30px"></td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <p id="audio_positionRecord" style="font-family: Calibri; font-size: x-large; font-weight: bold;"></p>
                     </td>
                     <td colspan="2">
-                        <p id="audio_positionPlay" style="font-family: Calibri; font-size: x-large ; font-weight: bold;"></p>
                     </td>
                 </tr>
                 <tr>
@@ -85,39 +96,18 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <div id="divlegend" style="visibility: hidden; background-color: khaki; width: 350px; height: 30px;" >
-                            <img id="recImg" src="img/micro_push_rec.png" align="center" width="30px" height="30px" border="none" >
-                            <label id="lbllegend" style="font-size: large; font-family: Calibri;">DESLICE PARA CANCELAR</label>
-                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <img id="recordAudio_Push" src="img/micro_push.png" align="center" width="130px" height="130px" border="none" >
-                        <img id="playAudio_Push" src="img/play_red.png" align="center" width="130px" height="130px" border="none" onclick="playAudioPush();" >
                     </td>
                     <td >
-                        <img id="exitImg" src="img/exit_01.png" align="center" width="90px" height="90px" border="none" onclick="exitApp();" >
+
                     </td>
                 </tr>
             </table>
             <br/>
 
-<!-- camera.Capture
-            <img style="display:none;width:200px;height:200px;" id="smallImage" src="" />
-            <br/>
-            <button onclick="capturePhoto();" style="height: 60px; width: 300px; font-size: 22px">Capture Photo</button> <br>
-            <button onclick="capturePhotoEdit();" style="height: 60px; width: 300px; font-size: 22px">Capture Editable Photo</button> <br>
-            <br/>
-            <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" style="height: 60px; width: 300px; font-size: 220px">From Photo Library</button><br>
-            <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);" style="height: 60px; width: 300px; font-size: 22px">From Photo Album</button><br>
-            <br/>
-            <img style="display:none;" id="largeImage" src="" />
-            <br/>
-            <br/>
-            <button id="exitAppPhoto" value="exitAppPhoto" onclick="exitApp();" style="height: 60px; width: 200px; font-size: 40px" >EXIT</button>
-            <br/>
--->
         </div>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>

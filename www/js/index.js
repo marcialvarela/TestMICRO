@@ -103,7 +103,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchmove',functio
 
     //Limpiamos etiquetas de segundos
     setAudioPlayPosition("");
-    setAudioPosition("");
+    setAudioRecPosition("");
 
     //Provocamos parar la grabación
     meFileRecord = null
@@ -143,7 +143,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
 
     //Limpiamos etiquetas de segundos
     setAudioPlayPosition("");
-    setAudioPosition("");
+    setAudioRecPosition("");
 
     if(!flag) {
         // ha ido bien
@@ -233,7 +233,7 @@ function gotFileEntry(fileEntry) {
                         }
                         if (iPos==0){
                             setAudioPlayPosition("");
-                            setAudioPosition("");
+                            setAudioRecPosition("");
                             document.getElementById('playAudio_Push').src="img/play_red.png";
                         }
                         else{
@@ -291,54 +291,6 @@ function iniRecordAudioPush() {
     recStatus = 1;
 }
 
-function iniRecordAudioPush_OLD() {
-
-    //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-    meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-
-    // Record audio
-    meFileRecord.startRecord();
-    recStatus = 1;
-    // Stop recording after 10 sec
-    var recTime = 0;
-    //var recInterval = setInterval(
-    recInterval = setInterval(
-        function() {
-            recTime = recTime + 1;
-            //recordAudioImg
-            //setAudioPosition("Recording audio..." + recTime + " sec");
-            if (recTime<10) {
-                setAudioPosition("0:0" + recTime + " sec");
-            }
-            else{
-                setAudioPosition("0:" + recTime + " sec");
-            }
-
-            if (recTime >= timeToRec) {
-
-                var msg="Ha sobrepasado el tiempo de grabación. ¿Quiere guardar la grabcación?";
-                navigator.notification.confirm(msg, onConfirm, 'Tiempo de grabación', ['Si','No'])
-
-                clearInterval(recInterval);
-                meFileRecord.stopRecord();
-                alert('stopRecord 1');
-                recStatus = 0;
-            }
-            else
-            {
-                document.getElementById('recImg').style.visibility="visible";
-                var iin = recTime % 2;
-                if (iin == 0) {
-                    document.getElementById('recImg').src="img/micro_push_rec.png";
-                }
-                else{
-                    document.getElementById('recImg').src="img/micro_push_rec_2.png";
-                }
-            }
-        }
-        , timeToRec * 1000);
-
-}
 
 function stopRecordAudioPull(){
 
@@ -349,7 +301,7 @@ function stopRecordAudioPull(){
 
     playStatus=0;
     document.getElementById('playAudio_Push').style.visibility="visible";
-    setAudioPosition("STOP Recording audio");
+    //setAudioRecPosition("STOP Recording audio");
 }
 
 
@@ -398,12 +350,12 @@ function onError(error) {
 /*************************** LABEL AUDIO - INI ***************************/
 // Set audio position
 //
-function setAudioPosition(position) {
-    document.getElementById('audio_positionRecord').innerHTML = position;
+function setAudioRecPosition(position) {
+    document.getElementById('audio_position').innerHTML = position;
 }
 
 function setAudioPlayPosition(position) {
-    document.getElementById('audio_positionPlay').innerHTML = position;
+    document.getElementById('audio_position').innerHTML = position;
 }
 /*************************** LABEL AUDIO - END ***************************/
 
@@ -422,78 +374,3 @@ function exitApp() {
     navigator.app.exitApp();
 }
 /*************************** EXIT APP - END ***************************/
-
-
-
-/***************************   AUDIO - END   ***************************/
-/***************************   AUDIO - END   ***************************/
-/***************************   AUDIO - END   ***************************/
-
-
-
-
-/*************************** RECORD AUDIO - INI ***************************/
-/*
- function recordAudio2() {
-
- if (recStatus == 0)
- {
- // Inicia la grabación del  Audio
- iniRecordAudio();
- }
- else
- {
- // para la grabación del audio
- stopRecordAudio();
- }
- }
-
- function iniRecordAudio() {
-
- //var meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
- meFileRecord = new Media(myFileName, onSuccess('Record'), onError);
-
- // Record audio
- meFileRecord.startRecord();
- recStatus = 1;
- // Stop recording after 10 sec
- var recTime = 0;
- //var recInterval = setInterval(
- recInterval = setInterval(
- function() {
- recTime = recTime + 1;
- //recordAudioImg
- setAudioPosition("Recording audio..." + recTime + " sec");
- if (recTime >= setInt) {
- setAudioPosition("Record Audio --> OK");
- clearInterval(recInterval);
- meFileRecord.stopRecord();
- document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
- }
- else
- {
- var iin = recTime % 2;
- if (iin == 0) {
- document.getElementById('recordAudioImg').src="img/red_stop_playback.png";
- }
- else{
- document.getElementById('recordAudioImg').src="img/red_stop_playback_2.png";
- }
- }
- }
- , setInt * 100);
-
- }
-
- function stopRecordAudio() {
-
- recStatus = 0;
- clearInterval(recInterval);
- meFileRecord.stopRecord();
- document.getElementById('recordAudioImg').src="img/red_stop_rec.png";
- setAudioPosition("STOP Recording audio");
-
- }
- */
-/*************************** RECORD AUDIO - END ***************************/
-
