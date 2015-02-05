@@ -158,7 +158,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
 
         // Mostramos el boton de PLAY
         document.getElementById('playAudio_Push').style.visibility="visible";
-        document.getElementById('playAudio_Push').src="img/play_red.png";
+        document.getElementById('playAudio_Push').src="img/play.png";
         playStatus=0;
     }
     else{
@@ -176,7 +176,7 @@ document.getElementById('recordAudio_Push').addEventListener('touchend',function
 
         // Ocultamos el boton de PLAY
         document.getElementById('playAudio_Push').style.visibility="hidden";
-        document.getElementById('playAudio_Push').src="img/play_red.png";
+        document.getElementById('playAudio_Push').src="img/play.png";
         playStatus=0;
 
     }
@@ -231,10 +231,10 @@ function gotFileEntry(fileEntry) {
                         }
                         if (iPos==0){
                             setAudioPosition("", 0);
-                            document.getElementById('playAudio_Push').src="img/play_red.png";
+                            document.getElementById('playAudio_Push').src="img/play.png";
                         }
                         else{
-                            document.getElementById('playAudio_Push').src="img/stop_red.png";
+                            document.getElementById('playAudio_Push').src="img/stop.png";
                         }
                     }
                 },
@@ -256,7 +256,7 @@ function iniPlayAudio(){
 function stopAudio() {
     clearInterval(recInterval);
     my_media.stop();
-    document.getElementById('playAudio_Push').src="img/play_red.png";
+    document.getElementById('playAudio_Push').src="img/play.png";
 }
 /*************************** PLAY AUDIO PUSH - END ***************************/
 /*****************************************************************************/
@@ -307,14 +307,14 @@ function playAudioPush(){
     {
         // Inicia el play del Audio
         playStatus = 1;
-        document.getElementById('playAudio_Push').src="img/stop_red.png";
+        document.getElementById('playAudio_Push').src="img/stop.png";
         iniPlayAudio();
     }
     else if (playStatus == 1)
     {
         // para el play del audio
         playStatus = 0;
-        document.getElementById('playAudio_Push').src="img/play_red.png";
+        document.getElementById('playAudio_Push').src="img/play.png";
         stopAudio();
     }
 
